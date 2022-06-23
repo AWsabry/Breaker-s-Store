@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+
+Checkout
+
+{% endblock title %}
+
+{% block content %}
+
+
+
+<form method="POST">
+ {% csrf_token %}
+
+   <!-- SECTION -->
+   <div class="section">
+     <!-- container -->
+     <div class="container">
+       <!-- row -->
+       <div class="row">
+
+         <div class="col-md-7">
+           <!-- Billing Details -->
+           <div class="billing-details">
+             <div class="section-title">
+               <h3 class="title">Login with your account</h3>
+             </div>
+             <div class="form-group">
+               <input class="input" type="email" name="email" placeholder="Email">
+             </div>
+             <div class="form-group">
+               <input class="input" type="password" name="password" placeholder="Password">
+             </div>
+  
+           </div> 
+         
+           <button class="btn btn-primary" type="submit">Login</button>
+         </form>
+         <p class="text-right">If you don't have an account, <a href="Register">signup</a> instead.</p>
+       </div>
+       
+         
+         <!-- /Order Details -->
+       </div>
+       <!-- /row -->
+     </div>
+     <!-- /container -->
+   </div>
+   <!-- /SECTION -->
+
+ {% endblock content %}

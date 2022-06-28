@@ -33,7 +33,8 @@ class Game(models.Model):
 class Code_Categories(models.Model):
     codeCategory = models.CharField(max_length=250, blank=True)
     categoryslug = models.SlugField(unique=True, db_index=True)
-    image = models.ImageField(upload_to="categories", blank=True)
+    image = models.ImageField(upload_to="codeCategories", blank=True)
+    background_image = models.ImageField(upload_to="codeCategories", blank=True)
     description = models.TextField(blank=True)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)

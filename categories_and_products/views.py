@@ -21,7 +21,7 @@ def index(request):
             "code_categories": code_categories,
             'games': games,
         }
-    print(x)
+    # print(x)
     return render(request, 'index.html', context)
 
 

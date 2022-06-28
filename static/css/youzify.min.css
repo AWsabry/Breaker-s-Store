@@ -828,9 +828,9 @@ i.youzify-small-verified-icon {
 
 .button.reject,
 .group-button.leave-group {
-    color: #8a8a8a;
+    color: #c00000;
     min-width: 170px;
-    border: 1px solid #eee;
+    border: 1px solid #c00000;
     background-color: transparent
 }
 
@@ -1548,9 +1548,9 @@ body .bbp_widget_login .bbp-login-form label {
     content: '\f2f6'
 }
 
-.group-button a.leave-group:before {
+/* .group-button a.leave-group:before {
     content: '\f2f5'
-}
+} */
 
 .group-button .accept-invite:before {
     content: '\f00c'

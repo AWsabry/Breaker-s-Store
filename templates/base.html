@@ -25,13 +25,8 @@
 
 </head>
 
-<body class="page-home">
-    <input id="toggle" type="checkbox">
-    <script type="text/javascript">
-        document.getElementById("toggle").addEventListener("click", function() {
-            document.getElementsByTagName('body')[0].classList.toggle("dark-theme");
-        });
-    </script>
+<body class="page-home dark-theme">
+  
 
       <!-- Loader-->
       <div id="page-preloader">
@@ -56,7 +51,7 @@
             <div class="page-header__inner">
                 <div class="page-header__sidebar">
                     <div class="page-header__menu-btn"><button class="menu-btn ico_menu is-active"></button></div>
-                    <div class="page-header__logo"><img src="{% static "img/logoss.png" %}" alt="logo">
+                    <div class="page-header__logo"><img src="{% static "img/breakers_logo.png" %}" alt="logo">
                         <span class="page-header__logo_text">Breaker's Store</span>
                     </div>
                 </div>

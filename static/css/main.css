@@ -1106,7 +1106,7 @@ a:hover {
 
 .uk-button-danger {
     background: rgba(244, 97, 25, 0.05);
-    color: #c00000;
+    color: #fff;
 }
 
 .uk-button-danger:hover,
@@ -1473,7 +1473,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 400px;
+    width: 280px;
     height: 100px;
     padding: 0 30px;
     border-right: 1px solid #F2F2F2;
@@ -4397,7 +4397,7 @@ body.dark-theme .recommend-slide {
 
 body.dark-theme .game-card__box {
     -webkit-box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
-    background: #0C1826;
+    background: transparent;
     box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
 }
 
@@ -5463,7 +5463,7 @@ html body.dark-theme .uk-modal-title {
 
 
 html body.dark-theme #youzify-groups-list li .youzify-group-data {
-    background-color: #0C1826;
+    background-color: transparent;
 }
 
 html body.dark-theme #youzify-groups-list .item .item-title a {

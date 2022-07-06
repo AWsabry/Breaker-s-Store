@@ -1,5 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin,Group
+from django.dispatch import receiver
+from django.db.models.signals import post_save, pre_save
+from django.utils.timezone import timedelta
+from django.utils import timezone
+from Breakers_Store import settings
+
+from Register_Login.utils import AccessTokenGenerator
 
 
 
@@ -46,6 +53,7 @@ class UserManager(BaseUserManager):
 
 class Profile(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(verbose_name='email address', unique=True)
+    username = models.CharField(max_length=50, null=True)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
     is_active = models.BooleanField(default=False)
@@ -55,7 +63,7 @@ class Profile(AbstractBaseUser,PermissionsMixin):
     city = models.CharField(max_length=60, null=True)
     PhoneNumber =  models.CharField(max_length=20, null=True)
     last_modified = models.DateTimeField(auto_now=True)
-    ProfilePic = models.ImageField(upload_to="profile/", null=True)
+    # ProfilePic = models.ImageField(upload_to="profile/", null=True)
 
     USERNAME_FIELD = 'email'
     objects = UserManager()
@@ -70,5 +78,21 @@ class Newsletter(models.Model):
         return self.email
 
 
-        
+
+class AccessToken(models.Model):
+    token = models.CharField(max_length=500, blank=True)
+    user = models.ForeignKey(to= Profile, on_delete=models.CASCADE, related_name='token')
+    expires = models.DateTimeField()
+    created = models.DateTimeField(auto_now=True, editable=False)
+    
+    def __str__(self):
+        return self.token
+    
+    class Meta:
+        ordering = ('-created',)
+
+@receiver(pre_save, sender=AccessToken)
+def token_save(sender, instance, **kwargs):
+    instance.token = AccessTokenGenerator().make_token(instance.user)
+    instance.expires = timezone.now() + timedelta(seconds=settings.AUTH_EMAIL_ACTIVATE_EXPIRE)
     

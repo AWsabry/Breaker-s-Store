@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
 
-    <link  type="image/x-icon"  rel="shortcut icon"  href="{% static "img/favicon.png" %}"/>
+    <link  type="image/x-icon"  rel="shortcut icon"  href="{% static "img/breakers_logo.png" %}"/>
     <link  rel="stylesheet"  href="{% static "css/libs.min.css" %}"/>
     <link  rel="stylesheet"  href="{% static "css/main.css" %}"/>
     <link rel="stylesheet" href="{% static "css/youzify.min.css" %}">
@@ -51,8 +51,8 @@
             <div class="page-header__inner">
                 <div class="page-header__sidebar">
                     <div class="page-header__menu-btn"><button class="menu-btn ico_menu is-active"></button></div>
-                    <div class="page-header__logo"><img src="{% static "img/breakers_logo.png" %}" alt="logo">
-                        <span class="page-header__logo_text">Breaker's Store</span>
+                    <div class="page-header__logo"><img src="{% static "img/breakers_logo.png" %}" alt="logo"> <a href="{% url 'categories_and_products:index' %}"></a>
+                        <span href="{% url 'categories_and_products:index' %}"  class="page-header__logo_text">Breaker's Store</span>
                     </div>
                 </div>
                 <div class="page-header__content">
@@ -60,11 +60,25 @@
                         <div class="search">
                             <div class="search__input"><i class="ico_search"></i><input type="search" name="search" placeholder="Search"></div>
                         </div>
+                        
                     </div>
+                    {% if user.is_authenticated %}
+                  
                     <div class="page-header__action">
+                       
+                      <h5 class="uk-text__intro">Welcome {{user.username}}</h5> 
                         <a class="action-btn" href="07_friends.html"><i class="ico_shopping-cart"></i><span class="animation-ripple-delay2"></span></a>
-                        <a class="profile" href="08_wallet.html"><img src="{% static "img/Profile.png" %}" alt="profile"></a>
+                        
+                        {% comment %} <a class="profile" href="08_wallet.html"><img src="{{ user.ProfilePic.url }}" alt="profile"></a> {% endcomment %}
+                        
+                        <a href = "{% url 'Register_Login:logOut' %}"> <button class="uk-button uk-button-secondary" type="button">Logout </button></a>
                     </div>
+                    {% else %}
+                    
+                    <div>
+                        <a href = "{% url 'Register_Login:login' %}"> <button class="uk-button uk-button-secondary" type="button">Login</button> </a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </header>
@@ -86,7 +100,7 @@
                 </div>
             </aside>
             
-
+            {% include 'messages.html' %}
             {% block content %} {% endblock content %}
         </div>
     </div>

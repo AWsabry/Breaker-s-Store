@@ -755,9 +755,9 @@ body.no-scroll {
     position: relative;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 320px;
-    max-width: 1920px;
-    min-height: 100vh;
+    min-width: auto;
+    max-width: auto;
+    min-height: 100vh; 
     margin: 0 auto;
     background: #F5F5F5;
 }
@@ -772,7 +772,7 @@ body.no-scroll {
     display: flex;
     flex-grow: 1;
     align-items: stretch;
-    padding-top: 75px;
+    padding-top: 1px;
 }
 
 .page-wrapper .page-main {
@@ -781,7 +781,7 @@ body.no-scroll {
     -moz-appearance: none !important;
     display: block;
     position: relative;
-    height: calc(100vh - 75px);
+    /* height: calc(100vh - 75px); */
     padding: 45px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -792,7 +792,7 @@ body.no-scroll {
 }
 
 .page-wrapper .page-main::-webkit-scrollbar-track {
-    background-color: #E2EBEC;
+    background-color: transparent;
 }
 
 .page-wrapper .page-main::-webkit-scrollbar-thumb {
@@ -1503,7 +1503,7 @@ a:hover {
 }
 
 .logo-big img {
-    max-width: 65px;
+    max-width: 200px;
 }
 
 .logo-big span {
@@ -1511,7 +1511,7 @@ a:hover {
     font-size: 82px;
     color: #fff;
     position: relative;
-    top: 38px;
+    top: 60px;
     left: 12px;
 }
 
@@ -1715,7 +1715,7 @@ a:hover {
     top: 75px;
     left: -250px;
     width: 250px;
-    height: calc(100vh - 75px);
+    height:auto;
     padding: 30px 20px 30px 0;
     overflow-y: auto;
     border-right: 1px solid #F2F2F2;
@@ -4252,7 +4252,7 @@ body.dark-theme .nice-select .option:hover {
 }
 
 body.dark-theme .uk-button-secondary {
-    background: #323446;
+    background: #c00000;
 }
 
 body.dark-theme .uk-button-primary {

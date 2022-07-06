@@ -1,72 +1,90 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Breaker Store - Promote your games now !</title>
+    <meta content="Templines" name="author">
+    <meta content="TeamHost" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+    <link  type="image/x-icon"  rel="shortcut icon"  href="{% static "img/breakers_logo.png" %}"/>
+    <link  rel="stylesheet"  href="{% static "css/libs.min.css" %}"/>
+    <link  rel="stylesheet"  href="{% static "css/main.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/youzify.min.css" %}">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body class="page-login dark-theme">
 
 
 
+    <!-- Loader-->
+    <div id="page-preloader">
+        <div class="preloader-1">
+            <div class="loader-text">Loading</div>
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+            <span class="line line-4"></span>
+            <span class="line line-5"></span>
+            <span class="line line-6"></span>
+            <span class="line line-7"></span>
+            <span class="line line-8"></span>
+            <span class="line line-9"></span>
+        </div>
 
- {% extends 'base.html' %}
- {% load static %}
-{% block title %}
-
-Checkout
-
-{% endblock title %}
-
-{% block content %}
+    </div>
+    <!-- Loader end-->
 
 
+    {% comment %} <div class="page-wrapper"> {% endcomment %}
+        <main class="page-first-screen">
+            <div class="uk-grid uk-grid-small uk-child-width-1-2@s uk-flex-middle uk-width-1-1" data-uk-grid>
+                <div class="logo-big">
+                    <img src="{% static "img/logo/01.png" %}" alt="logo" class="animation-navspinv">
+                    <span>Breaker's Store</span>
+			
+                   
+                </div>
+                <div>
+                    <div class="form-login">
+                        <div class="form-login__box">
+                            <div class="uk-heading-line uk-text-center"><span>Registeration</span></div>
+                            <form method="POST">
+								{% csrf_token %}
+                                <div class="uk-margin"><input class="uk-input" name="email" id="email" type="email" placeholder="Email" ></div>
+                                <div class="uk-margin"><input class="uk-input" name="username" id="username" type="text" placeholder="Username"></div>
+								<div class="uk-margin"><input class="uk-input" name="first_name" id="first_name" type="text" placeholder="First Name"></div>
+								<div class="uk-margin"><input class="uk-input"  name="last_name" id="last_name" type="text" placeholder="Last Name"></div>
+                                <div class="uk-margin"><input class="uk-input"  name="password1" id="password1" type="password" placeholder="Password"></div>
+                                <div class="uk-margin"><input class="uk-input" name="password2" id="password2" type="password" placeholder="Confrim Password"></div>
+                                <div class="uk-margin"><input class="uk-input" name="Age" id="Age" type="number" min="1" max="99" placeholder="Age"></div>
+								<div class="uk-margin"><input class="uk-input" name="city" id="city" type="text" placeholder="City"></div>
+								<div class="uk-margin"><input class="uk-input"  name="PhoneNumber" id="PhoneNumber" type="numbers" placeholder="PhoneNumber"></div>
+                                {% comment %} <div class="uk-margin"><input  name="ProfilePic" id="ProfilePic" type="file" placeholder="Upload Your Profile Pic"></div> {% endcomment %}
+                                <div class="uk-margin">
+                                    {% comment %} <button class="uk-button uk-button-danger uk-width-1-1" type="button">Register</button></div> {% endcomment %}
+                                    <input type="submit" name="signup" id="signup" class="uk-button uk-button-danger uk-width-1-1"  value="Register"/></div>
+                                <div class="uk-text-center"><span>Already have an account?</span><a class="uk-margin-small-left" href="login">Log In</a></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% comment %} </div> {% endcomment %}
 
-<form method="POST">
-	{% csrf_token %}
+    <script src="static/js/libs.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
 
-		<!-- SECTION -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-
-					<div class="col-md-7">
-						<!-- Billing Details -->
-						<div class="billing-details">
-							<div class="section-title">
-								<h3 class="title">Create an account</h3>
-							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="first_name" placeholder="FirstName">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last_name" placeholder="LastName">
-							</div>
-
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div> 
-
-							<div class="form-group">
-								<input class="input" type="password" name="password1" placeholder="Password">
-							</div>
-							<div class="form-group">
-								<input class="input" type="password" name="password2" placeholder="Confirm Password">
-							</div>
-							<div>
-
-							</div>
-						</div> 
-					
-						<button class="btn btn-primary" type="submit">Register</button>
-					</form>
-					<p class="text-right">If you already have an account, <a href="sign">login</a> instead.</p>
-				</div>
-				
-					
-					<!-- /Order Details -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /SECTION -->
-
-	{% endblock content %}
+</html>

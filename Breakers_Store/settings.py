@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Register_Login',
     'categories_and_products',
+    'cart_and_orders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -136,3 +137,19 @@ MEDIA_URL = "/uploads/"
 AUTH_USER_MODEL = 'Register_Login.Profile'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_EMAIL_ACTIVATE_EXPIRE = 120 # in seconds
+
+# SMTP CONFIGURATION
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreplybreaker@gmail.com'
+EMAIL_HOST_PASSWORD = 'break_123'
+EMAIL_USE_TLS = True 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+MAXIMUM_SIZE_ALLOWED_PHOTO = 1024 * 1024 * 2
+MAXIMUM_SIZE_ALLOWED_VIDEO = 1024 * 1024 * 50

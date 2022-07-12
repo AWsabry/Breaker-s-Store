@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cart_and_orders.models import Cart, CartItems, Order
+from cart_and_orders.models import Cart, CartItems, Codes, Order
 from django.conf import settings
 
 
@@ -32,6 +32,11 @@ class CartAdmin(admin.ModelAdmin):
         return obj.user.PhoneNumber
 
 
+class CodesAdmin(admin.TabularInline):
+    model = Codes
+    list_display = ('id')
+    # raw_id_fields = ['product']
+
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['user',
@@ -44,8 +49,8 @@ class OrderAdmin(admin.ModelAdmin):
                     'PhoneNumber',
 
                     ]
-    list_display_links = [
-        'user',
+    inlines = [
+        CodesAdmin,
     ]
     list_filter = ['user',
                    'delivered',
@@ -62,6 +67,9 @@ class OrderAdmin(admin.ModelAdmin):
         return obj.user.PhoneNumber
 
 
+
+
+
 class BromoCodeAdmin(admin.ModelAdmin):
     list_filter = ("active", "code",)
     list_display = ('code', "percentage", 'created', "active")
@@ -74,10 +82,16 @@ class DeliveryfeesAdmin(admin.ModelAdmin):
     list_display = ('city', "delivery_fees", 'ordered_date','active')
     search_fields = ['city']
 
+class CodyyyAdmin(admin.ModelAdmin):
+    list_display = ('code','id',)
+
+
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, CartAdmin)
+admin.site.register(Codes,CodyyyAdmin)
 
-# admin.site.register(CartItems)
+
+admin.site.register(CartItems)
 # admin.site.register(BromoCode, BromoCodeAdmin)

@@ -163,7 +163,11 @@ def signIn(request):
                 user_login(request, user)
                 messages.success(request, "You Have been logged successfully!")
                 return HttpResponseRedirect('/')
-        return render(request, 'signIn.html', {'form': form})
+
+            else:
+                form = LoginForm(request.POST, request.FILES)
+                
+        return render(request, 'login.html', {'form': form})
 
 
 def completeProfile(request):

@@ -1,6 +1,8 @@
 from django.contrib import admin
+from cart_and_orders.admin import CodesAdmin
+from cart_and_orders.models import Codes
 
-from categories_and_products.models import Game, Codes, PromoCode,Code_Categories
+from categories_and_products.models import Game, PromoCode,Code_Categories
 
 # Register your models here.
 
@@ -19,17 +21,6 @@ class Code_Categories_Admin(admin.ModelAdmin):
     list_display = ('codeCategory', "created", "price","game","id","New_Products","Most_Popular","Best_Offer")
     search_fields = ['codeCategory']
 
-
-class CodesAdmin(admin.ModelAdmin):
-    list_filter = ("code", "category", "created")
-    list_display = ("code", "category",
-                    "stock", "id", "created", "active",)
-    list_display_links = [
-        'category',
-    ]
-    search_fields = ['codeName']
-
-
 class PromoCodeAdmin(admin.ModelAdmin):
     list_filter = ("active", "Promocode",)
     list_display = ('Promocode', "percentage", 'created', "active")
@@ -42,5 +33,6 @@ class PromoCodeAdmin(admin.ModelAdmin):
 
 admin.site.register(Game, GameAdmin)
 admin.site.register(Code_Categories, Code_Categories_Admin)
-admin.site.register(Codes, CodesAdmin)
+
+
 # admin.site.register(PromoCode, PromoCodeAdmin)

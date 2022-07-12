@@ -1,7 +1,9 @@
-from django.db import models
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
+from django.db import models
+
+# from cart_and_orders.models import Order
 
 # Create your models here.
 
@@ -53,7 +55,7 @@ class Code_Categories(models.Model):
         return self.codeCategory
     
     def get_absolute_url(self):
-        return reverse('categories_and_products:code_details', args=[self.id])
+        return reverse('categories_and_products:code_details', args=[self.categoryslug])
 
 
     # def discountpercentage(self):
@@ -69,20 +71,7 @@ class Code_Categories(models.Model):
         verbose_name_plural = "Code Categories"
 
 
-class Codes(models.Model):    
-    code = models.CharField(max_length=1000, blank=True)
-    category = models.ForeignKey(Code_Categories, on_delete=models.CASCADE, blank=True, null=True,)
-    active = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True)
-    stock = models.IntegerField()
 
-    def __str__(self):
-        return self.code
-
-
-    
-    class Meta:
-        verbose_name_plural = "Codes"
 
 
 class PromoCode(models.Model):

@@ -62,9 +62,26 @@
                 </ul>
                
             </div>
-            <div class="game-profile-price">
-                <div class="game-profile-price__value">${{codeCategories.price}} USD</div><button class="uk-button uk-button-danger uk-width-1-1" type="button"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button>
+
+            {% comment %} {% if user.is_authenticated %} {% endcomment %}
+            
+            <div class="game-profile-price" >
+                <div class="uk-margin">
+                    <form method = "POST">
+                        {% csrf_token %}
+                    <input class="uk-input"  min="1" max="10"  name="Quantity" id="Quantity" type="number" value = "1" placeholder="Quantity">
+                </div> 
+
             </div>
+            <div class="game-profile-price">
+                <div class="game-profile-price__value">${{codeCategories.price}} USD</div><a> <button class="uk-button uk-button-danger uk-width-1-1" type="submit"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
+            </div>
+            {% comment %} {% else %} {% endcomment %}
+            {% comment %} <div class="game-profile-price">
+                <div class="game-profile-price__value">${{codeCategories.price}} USD</div><a href = "{% url 'Register_Login:login' %}"> <button class="uk-button uk-button-danger uk-width-1-1" type="button"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
+            </div> {% endcomment %}
+            {% comment %} {% endif %} {% endcomment %}
+            
             {% endfor %}
         </div>
     </div>

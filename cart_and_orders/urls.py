@@ -6,6 +6,7 @@ app_name = 'cart_and_orders'
 
 
 urlpatterns = [
+    path('cart', views.cart, name='cart'),
     path('checkout', views.checkout, name='checkout'),
     path('thankyou', views.ThankYou, name='thankyou'),
 ]

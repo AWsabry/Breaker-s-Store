@@ -47,16 +47,21 @@
 
 
     {% comment %} <div class="page-wrapper"> {% endcomment %}
-        {% include 'messages.html' %}
         <main class="page-first-screen">
             <div class="uk-grid uk-grid-small uk-child-width-1-2@s uk-flex-middle uk-width-1-1" data-uk-grid>
                 <div class="logo-big">
                     <img src="{% static "img/logo/01.png" %}" alt="logo" class="animation-navspinv">
-                    <span>Breaker's Store</span>
-			
-                   
+                    <span>Breaker's Store</span>                   
                 </div>
                 <div>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li> {{ message }} </li>
+                        {% endfor %}
+                    </ul>
+                    <br><br>
+                    {% endif %}
                     <div class="form-login">
                         <div class="form-login__box">
                             <div class="uk-heading-line uk-text-center"><span>Login</span></div>

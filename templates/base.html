@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -67,7 +66,7 @@
                     <div class="page-header__action">
                        
                       <h5 class="uk-text__intro">Welcome {{user.username}}</h5> 
-                        <a class="action-btn" href="07_friends.html"><i class="ico_shopping-cart"></i><span class="animation-ripple-delay2"></span></a>
+                        <a class="action-btn" href="{% url 'cart_and_orders:cart' %}"><i class="ico_shopping-cart"></i><span class="animation-ripple-delay2"></span></a>
                         
                         {% comment %} <a class="profile" href="08_wallet.html"><img src="{{ user.ProfilePic.url }}" alt="profile"></a> {% endcomment %}
                         
@@ -86,11 +85,16 @@
             <aside class="sidebar is-show" id="sidebar">
                 <div class="sidebar-box">
                     <ul class="uk-nav">
-                        <li class="uk-active"><a href="{% url 'categories_and_products:index' %}"><i class="ico_home"></i><span>Home</span></a></li>
+
+                        <li><a href="{% url 'categories_and_products:index' %}"><i class="ico_home"></i><span>Home</span></a></li>
                         <li class="uk-nav-header">Account</li>
                         <li><a href="04_profile.html"><i class="ico_profile"></i><span>Profile</span></a></li>
-                        <li><a href="05_favourites.html"><i class="ico_shopping-cart"></i><span>Cart</span><span class="count">15</span></a></li>
+                        <li><a href="11_market.html"><i class="ico_market"></i><span>Your Orders</span></a></li>
+                        <li><a href="{% url 'cart_and_orders:cart' %}"><i class="ico_shopping-cart"></i><span>Cart</span><span class="count">15</span></a></li>
+
+
                         <li class="uk-nav-header">Main</li>
+
                         <li><a href="{% url 'categories_and_products:store' %}"><i class="ico_store"></i><span>Store</span></a></li>
                         <li><a href="{% url 'categories_and_products:games' %}"><i class="ico_play-circle"></i><span>Games</span></a></li>
                         <li class="uk-nav-header">Support</li>
@@ -100,7 +104,6 @@
                 </div>
             </aside>
             
-            {% include 'messages.html' %}
             {% block content %} {% endblock content %}
         </div>
     </div>
@@ -153,8 +156,10 @@
             </div>
         </div>
     </div>
-    <script src="static/js/libs.js"></script>
-    <script src="static/js/main.js"></script>
+
+   
+    <script src=" {% static "js/libs.js" %}"></script>
+    <script src=" {% static "js/main.js" %}"></script>
 </body>
 
 </html>

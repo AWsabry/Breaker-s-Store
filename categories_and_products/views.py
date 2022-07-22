@@ -1,4 +1,5 @@
 from email import message
+from traceback import print_tb
 from unicodedata import category
 from django.shortcuts import redirect, render
 from Register_Login.models import Profile
@@ -37,8 +38,11 @@ def games(request):
 def store(request):
     code_categories = Code_Categories.objects.filter(
         active=True).order_by('-codeCategory')
+    codes = Codes.objects.filter(active = True, addToCart = False, ordered = False , user = None,codeCategory__active = True)
+    print(codes)
     context = {
-        'code_categories': code_categories
+        # 'codes' : codes,
+        'code_categories': code_categories,
     }
     return render(request, 'store.html', context)
 
@@ -46,9 +50,11 @@ def store(request):
 def GamesCodes(request, Gameslug):
     code_categories = Code_Categories.objects.filter(
         active=True, game__Gameslug=Gameslug)
+    codes = Codes.objects.filter(active = True, addToCart = False, ordered = False ,codeCategory__game__Gameslug = Gameslug, user = None).exists()
+    print(codes)
 
     context = {
-
+        'codes' : codes,
         'code_categories': code_categories,
     }
     return render(request, "GamesCodes.html", context)

@@ -15,10 +15,11 @@ class GameAdmin(admin.ModelAdmin):
     search_fields = ['gameName']
 
 
+
 class Code_Categories_Admin(admin.ModelAdmin):
     prepopulated_fields = {'categoryslug': ('codeCategory',), }
     list_filter = ("codeCategory", "created",)
-    list_display = ('codeCategory', "created", "price","game","id","New_Products","Most_Popular","Best_Offer")
+    list_display = ('codeCategory', "created", "price","game","active","id","New_Products","Most_Popular","Best_Offer")
     search_fields = ['codeCategory']
 
 class PromoCodeAdmin(admin.ModelAdmin):

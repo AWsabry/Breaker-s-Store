@@ -12,6 +12,8 @@ from Breakers_Store import settings
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from cart_and_orders.models import Cart, CartItems, Codes, Order
+from categories_and_products.models import Code_Categories
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -77,24 +79,26 @@ def cart(request):
     if request.user.is_authenticated:
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
         cart = Cart.objects.filter(user=request.user)
+       
 
         context = {
             'cartItems': cartItems,
             'cart': cart,
         }
-
+        
+    
         if request.method == 'POST':
             if cartItems.exists():
                 order = Order.objects.filter(
-                    user=request.user, delivered=False, paid=False).values()
+                    user=request.user, paid=False).values()
                 cart = Cart.objects.get(user=request.user)
                 order_codes = Codes.objects.filter(
-                    user=request.user, addToCart=True, ordered=False,active = True)
+                    user=request.user, addToCart=True, ordered=False, active=True)
 
-                for getting_Id in order:
-                    order_id = getting_Id['id']
-                order_id
-                print(order_id)
+                # for getting_Id in order:
+                #     order_id = getting_Id['id']
+                # order_id
+                # print(order_id)
 
                 order_sent = Order.objects.create(
                     user=request.user,
@@ -105,25 +109,28 @@ def cart(request):
                     send_code_email(request, order_codes)
                 print('Email Sent')
 
-            # Updates
-                if order_id == None:
-                    Codes.objects.filter(user=request.user, addToCart=True, ordered=False,active = True).update(
-                        order_id=1, ordered=True,active = False)
-                else:
-                    Codes.objects.filter(user=request.user, addToCart=True, ordered=False,active = True).update(
-                        order_id=order_id, ordered=True,active = False)
+            # Updating the codes to the order ID and the profit sum
+                
+                Codes.objects.filter(user=request.user, addToCart=True, ordered=False, active=True).update(
+                    order_id=order_sent.id, ordered=True, active=False,)
+
+                total_Profit_from_sales =  Codes.objects.filter(ordered = True).aggregate(Sum('profit')).get('profit__sum')
+
+                Codes.objects.filter(ordered=True, active=False,).update(total_profit_calculated_from_sales = total_Profit_from_sales)
+
+                print(total_Profit_from_sales)
 
             # Updating the cartItem with the order id that's ordered
                 CartItems.objects.filter(user=request.user, ordered=False).update(
                     ordered=True,
-                    orderId=order_id,
+                    orderId=order_sent.id,
                 )
              # Updating the total price in the cart
                 Cart.objects.filter(user=request.user).update(total_price=0)
                 return redirect('cart_and_orders:order_confirmation')
             else:
                 messages.error(request, _('* Your Cart is Empty, Please add to cart first'),
-                           extra_tags='danger')
+                               extra_tags='danger')
 
     else:
         messages.error(request, _('* Login First Please'),

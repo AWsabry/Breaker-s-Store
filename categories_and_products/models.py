@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.db import models
 
+
 # from cart_and_orders.models import Order
 
 # Create your models here.
@@ -45,6 +46,7 @@ class Code_Categories(models.Model):
     Most_Popular = models.BooleanField(default=False)
     Best_Offer = models.BooleanField(default=False)
     New_Products = models.BooleanField(default=False)
+    price_bought_by = models.FloatField(default=0)
 
      
 
@@ -56,6 +58,9 @@ class Code_Categories(models.Model):
     
     def get_absolute_url(self):
         return reverse('categories_and_products:code_details', args=[self.categoryslug])
+
+   
+            
 
 
     # def discountpercentage(self):

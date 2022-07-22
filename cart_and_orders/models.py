@@ -3,8 +3,8 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-
 from categories_and_products.models import Code_Categories
+from django.db.models import Sum
 
 # Create your models here.
 
@@ -45,23 +45,29 @@ class Codes(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.PROTECT,blank=True,null= True)
     code = models.CharField(max_length=1000, blank=True)
-    codeCategory = models.ForeignKey(Code_Categories, on_delete=models.CASCADE, blank=True, null=True,)
+    codeCategory = models.ForeignKey(Code_Categories, on_delete=models.CASCADE,)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order,on_delete= models.SET_NULL, blank= True, null=True)
     paid = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
     addToCart = models.BooleanField(default=False)
+    profit = models.FloatField(default=0, verbose_name= 'Profit From This Code' )
+    total_profit_calculated_from_sales = models.FloatField(default=0, verbose_name= 'Profit From Orders' )
+    price = models.FloatField(default=0, verbose_name= 'Price Of This Code' )
 
     def __str__(self):
         return self.code
-
-
-    
     class Meta:
         verbose_name_plural = "Codes"
 
-        
+@receiver(pre_save, sender=Codes)
+def calculatedFromSales(sender, **kwargs):
+    codes = kwargs['instance']
+    codes.price = float(codes.codeCategory.price)
+    codes.profit = float(codes.codeCategory.price) - float(codes.codeCategory.price_bought_by)
+
+    
 
 class CartItems(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)

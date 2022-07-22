@@ -69,14 +69,13 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class CodeAdmin(admin.ModelAdmin):
-    list_display = ('code','codeCategory','user','order','addToCart','ordered','codePrice','id','active',)
+    list_display = ('code','codeCategory','user','price','order','addToCart','ordered','id','active','created','total_profit_calculated_from_sales')
     list_filter = ('codeCategory','user','addToCart','ordered','active',)
+    readonly_fields = ['total_profit_calculated_from_sales','price','profit'] 
 
-     
-    def codePrice(self, obj):
-        return   str(obj.codeCategory.price)
-        
     search_fields = ['code']
+ 
+
 
 class CartItemssAdmin(admin.ModelAdmin):
     list_display = ('id',)

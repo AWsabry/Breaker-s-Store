@@ -18,25 +18,36 @@
     <div class="uk-grid uk-grid-small" data-uk-grid>
         <div class="uk-width-2-3@s">
             <div class="gallery">
-                <div class="js-gallery-big gallery-big">
                     <div class="swiper">
                         {% for codeCategories in codeCategories %}
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="{{codeCategories.game.background_image.url}}" alt="image"></div>
+                        {% comment %} <div class="swiper-wrapper"> {% endcomment %}
+                            <div class="swiper"><img src="{{codeCategories.game.background_image.url}}" alt="image"></div>
       
 
-                        </div>
+                        {% comment %} </div> {% endcomment %}
                         {% endfor %}
+                    <div class="news-feed news-feed-post">
+
+
+                            <h4 class="post-name">How to use the codes 🧐 </h4>
+                            <div class="post-body">
+                                <p>Dolore magna aliqua quis nostrud exercitation consequat. 
+                                <br>Duis aute irure do lorin reprehendert sed ipsum nulla pariatur officia deserunt mollit anim id est laborum.<br>
+                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam.</p>
+                
+                
+                
+                            </div>
                     </div>
-                </div>
-                <div class="js-gallery-small gallery-small">
-                    <div class="swiper">
-              
+                        
                     </div>
-                    <div class="swiper-pagination"></div>
-                </div>
+                    
             </div>
+            
         </div>
+       
+
+
         <div class="uk-width-1-3@s">
             <div class="game-profile-card">
                 {% for codeCategories in codeCategories %}
@@ -66,12 +77,20 @@
             {% comment %} {% if user.is_authenticated %} {% endcomment %}
             
             <div class="game-profile-price" >
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li> {{ message }} </li>
+                    {% endfor %}
+                    <br>
+                </ul>
+                
+                {% endif %}
                 <div class="uk-margin">
                     <form method = "POST">
                         {% csrf_token %}
                     <input class="uk-input"  min="1" max="10"  name="Quantity" id="Quantity" type="number" value = "1" placeholder="Quantity">
                 </div> 
-
             </div>
             <div class="game-profile-price">
                 <div class="game-profile-price__value">${{codeCategories.price}} USD</div><a> <button class="uk-button uk-button-danger uk-width-1-1" type="submit"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>

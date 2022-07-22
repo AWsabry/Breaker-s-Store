@@ -16,10 +16,12 @@ def index(request):
 
     code_categories = Code_Categories.objects.filter(active=True)
     games = Game.objects.filter(active=True,)
+    steamGames = Game.objects.filter(active=True,gameName = "Steam Wallet Codes (TL)")
 
     context = {
         "code_categories": code_categories,
         'games': games,
+        "steamGames" : steamGames
     }
     return render(request, 'index.html', context)
 
@@ -52,6 +54,11 @@ def GamesCodes(request, Gameslug):
     return render(request, "GamesCodes.html", context)
 
 
+def profile(request):
+    # user_data = Profile.objects.filter(user = request.user)
+    return render(request, "profile.html")
+
+
 def code_details(request, categoryslug):
     quantityForm = QuantityForm(request.POST)
     Games = Game.objects.filter(active=True)
@@ -69,19 +76,13 @@ def code_details(request, categoryslug):
 
 
     
-    all_codes_in_category = Codes.objects.filter(category__categoryslug = categoryslug).all().count()
-
+    all_codes_in_category = Codes.objects.filter(codeCategory__categoryslug = categoryslug,addToCart = False).all().count()
     if request.method == "POST" and quantityForm.is_valid():
         if request.user.is_authenticated:
 
             Quantity = quantityForm.cleaned_data['Quantity']
             # order = Order.objects.filter(user=request.user, delivered=False, paid=False)
 
-            Code_Quantity_Control = Codes.objects.filter(active=True, category__categoryslug=categoryslug).order_by('?').values('pk')[:Quantity]
-            
-            # print(Code_Quantity_Control)
-            Codes.objects.filter(pk__in = Code_Quantity_Control).update(
-                user=request.user,addToCart = True)
 
             cart = Cart.objects.get(user=request.user)
 
@@ -97,26 +98,32 @@ def code_details(request, categoryslug):
             # return redirect()
 
             else:
+                # if the code category exist in the cart
                 if CartItems.objects.filter(user=request.user, codeCategory__categoryslug=categoryslug, ordered=False).exists():
-
                     cartItem = CartItems.objects.get(
                         user=request.user, codeCategory__categoryslug=categoryslug, ordered=False)
-                    new_added_codeCategory = quantityForm.cleaned_data['Quantity'] + \
-                        cartItem.quantity
+                    new_added_codeCategory = quantityForm.cleaned_data['Quantity'] + cartItem.quantity
 
                     print("EXIST")
 
                     CartItems.objects.filter(user=request.user, codeCategory__categoryslug=categoryslug, ordered=False).update(
                         quantity=new_added_codeCategory,
-                        totalOrderItemPrice=codeCategory.price * new_added_codeCategory
+                        totalOrderItemPrice=codeCategory.price * new_added_codeCategory,
                     )
                     cart.total_price += totalOrderItemPrice
                     cart.save()
+
+                    # Adding the user to the codes he ordered
+                    Code_Quantity_Control = Codes.objects.filter(active=True, codeCategory__categoryslug=categoryslug,addToCart = False).order_by('?').values('pk')[:Quantity]            
+                    Codes.objects.filter(pk__in = Code_Quantity_Control).update(
+                    user=request.user,addToCart = True)
+
                     messages.success(request, _('* Updated in Cart'),
                                      extra_tags='danger')
                     return redirect('cart_and_orders:cart')
 
                 else:
+                    # if the code category does not exist in the cart
                     CartItems.objects.create(
                         user=request.user,
                         cart=cart,
@@ -127,6 +134,11 @@ def code_details(request, categoryslug):
                     )
                     cart.total_price += totalOrderItemPrice
                     cart.save()
+                    Code_Quantity_Control = Codes.objects.filter(active=True, codeCategory__categoryslug=categoryslug,addToCart = False).order_by('?').values('pk')[:Quantity] 
+
+                    Codes.objects.filter(pk__in = Code_Quantity_Control).update(
+                    user=request.user,addToCart = True)
+
                     messages.success(request, _('* Added to cart'),
                                      extra_tags='danger')
                     return redirect('cart_and_orders:cart')
@@ -134,8 +146,6 @@ def code_details(request, categoryslug):
             messages.error(request, _('* Login First Please'),
                            extra_tags='danger')
             return redirect('Register_Login:login')
-    else:
-        pass
 
     context = {
         'categories': Games,
@@ -146,6 +156,6 @@ def code_details(request, categoryslug):
 
 
 def filtering_test(request):
-    products = Codes.objects.filter(active=True, category="").values()
+    products = Codes.objects.filter(active=True, codeCategory="").values()
     print(products)
     return render(request, 'filter.html', {'products': products})

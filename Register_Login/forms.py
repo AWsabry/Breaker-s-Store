@@ -16,7 +16,6 @@ class RegisterForm(UserCreationForm):
             'email': {
                 'unique': _("This entry has been registered before."),
             }
-            
         }
 
 class LoginForm(forms.Form):

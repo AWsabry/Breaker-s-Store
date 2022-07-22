@@ -13,4 +13,6 @@ urlpatterns = [
     path('details/<slug:categoryslug>/',views.code_details,name='code_details'),
     path('<slug:Gameslug>/',views.GamesCodes,name='GamesCodes'),
     path('filter',views.filtering_test,name='filter'),
+    path('profile', view = views.profile, name='profile'),
+
 ]

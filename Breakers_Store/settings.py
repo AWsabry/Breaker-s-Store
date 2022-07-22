@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -134,6 +135,8 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/uploads/"
 
+
+
 AUTH_USER_MODEL = 'Register_Login.Profile'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -143,13 +146,13 @@ AUTH_EMAIL_ACTIVATE_EXPIRE = 120 # in seconds
 
 # SMTP CONFIGURATION
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.gmail.com' 
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'noreplybreaker@gmail.com'
-EMAIL_HOST_PASSWORD = 'break_123'
-EMAIL_USE_TLS = True 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
+EMAIL_HOST = 'mail.quranfordeaf.com' 
+EMAIL_PORT = 26
+EMAIL_USE_TLS = False 
+EMAIL_HOST_USER = 'noreply1@quranfordeaf.com'
+EMAIL_HOST_PASSWORD = '3l2b@AfEt,kw'
 
 MAXIMUM_SIZE_ALLOWED_PHOTO = 1024 * 1024 * 2
 MAXIMUM_SIZE_ALLOWED_VIDEO = 1024 * 1024 * 50
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

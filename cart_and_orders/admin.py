@@ -41,7 +41,6 @@ class CodesAdmin(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['user',
                     'totalPrice',
-                    'delivered',
                     'paid',
                     'ordered_date',
                     'id',
@@ -53,7 +52,6 @@ class OrderAdmin(admin.ModelAdmin):
         CodesAdmin,
     ]
     list_filter = ['user',
-                   'delivered',
                    'ordered_date',
                    ]
     search_fields = ['user']
@@ -70,28 +68,25 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 
-class BromoCodeAdmin(admin.ModelAdmin):
-    list_filter = ("active", "code",)
-    list_display = ('code', "percentage", 'created', "active")
+class CodeAdmin(admin.ModelAdmin):
+    list_display = ('code','codeCategory','user','order','addToCart','ordered','codePrice','id','active',)
+    list_filter = ('codeCategory','user','addToCart','ordered','active',)
 
+     
+    def codePrice(self, obj):
+        return   str(obj.codeCategory.price)
+        
     search_fields = ['code']
 
-
-class DeliveryfeesAdmin(admin.ModelAdmin):
-    list_filter = ("city", "delivery_fees",)
-    list_display = ('city', "delivery_fees", 'ordered_date','active')
-    search_fields = ['city']
-
-class CodyyyAdmin(admin.ModelAdmin):
-    list_display = ('code','id',)
-
+class CartItemssAdmin(admin.ModelAdmin):
+    list_display = ('id',)
 
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, CartAdmin)
-admin.site.register(Codes,CodyyyAdmin)
+admin.site.register(Codes,CodeAdmin)
 
 
-admin.site.register(CartItems)
+admin.site.register(CartItems,CartItemssAdmin)
 # admin.site.register(BromoCode, BromoCodeAdmin)

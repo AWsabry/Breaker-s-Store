@@ -27,6 +27,7 @@ from Register_Login.models import AccessToken, Profile
 
 # Importing Forms
 from Register_Login.forms import CompleteProfile, LoginForm, RegisterForm
+from cart_and_orders.models import Cart
 
 
 # Email Confirm SignUp
@@ -46,9 +47,9 @@ def send_tracking(user):
 def token_check(user):
     token, time_tosend = send_tracking(user=user)
     if token:
-        # Cart.objects.create(
-        #             user=user,
-        #         )
+        Cart.objects.create(
+                    user=user,
+                )
         return (token, time_tosend)
     return (None, time_tosend)
 
@@ -75,6 +76,8 @@ def send_activate_mail(request, user):
                        'time_tosend': time_tosend}, extra_tags='danger')
 
 
+
+
 # This function is to create a new user profile & be saved in the models
 @csrf_exempt
 def Register(request):
@@ -93,8 +96,10 @@ def Register(request):
                 'Age'), form.data.get('PhoneNumber'),
 
             print(form.errors)
-           
-            user = Profile.objects.create_user(
+            if Profile.objects.filter(email = email).exists():
+                messages.error(request, "This Email Exists !")
+            else:
+                user = Profile.objects.create_user(
                     email=email,
                     first_name=first_name,
                     last_name=last_name,
@@ -104,11 +109,12 @@ def Register(request):
                     Age=Age,
                     PhoneNumber=PhoneNumber,
             )
-            print('user is created')
-            # send_activate_mail(request, user)
-            print(user)           
-            return redirect('Register_Login:email_sent')
-       
+                send_activate_mail(request, user)
+                return redirect('Register_Login:email_sent')
+
+            if not user:                    
+                messages.error(request, "Your email is not active")
+                print('user is created but not active')
         else:
             print("Error")
             form = RegisterForm()
@@ -119,6 +125,7 @@ def Register(request):
 # Confirming sending email to user
 def email_sent(request):
     return render(request, "email_sent.html")
+
 
 # Logout Page
 

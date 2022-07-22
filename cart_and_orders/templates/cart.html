@@ -14,8 +14,9 @@
 
                         </div>
                         {% else %}
-                        {% for cartItems in cartItems %}
+                       <br><br>
                         <div class="game-card --horizontal favourites-game">
+                            {% for cartItems in cartItems %} 
                             <div class="game-card__box">
                                 <div class="game-card__media"><a href="{{cartItems.codeCategory.get_absolute_url}}"><img src="{{cartItems.codeCategory.image.url}}" alt="Werewolf Complex" /></a></div>
                                 <div class="game-card__info"><a class="game-card__title" href="{{cartItems.codeCategory.get_absolute_url}}"> {{cartItems.codeCategory.codeCategory}}</a>
@@ -27,17 +28,42 @@
                                     <div class="game-card__bottom">
                                         <div class="game-card__platform"><i class="ico_windows"></i><i class="ico_apple"></i></div>
                                     </div>
+                                    
                                 </div>
+                                
                             </div>
+                            
+                            <hr>
+                            {% endfor %}
+                            <br>
+                            
+                            <div>
+                                {% for cart in cart %}
+                               <center> <h3 class="uk-text-lead">Total : {{cart.total_price}}</h3></center>
+                               {% endfor %}
+                                 <input type="submit" class="uk-button uk-button-danger"  value="Pay now"/>
+                                 <div class = "divider"> </div>
+                                 <a  href = "{% url 'categories_and_products:index' %}" ><input type="submit" class="uk-button uk-button-continue"  value="Continue shopping"/> </a>
+                            </div>
+                           
                         </div>
        
-                        {% endfor %}
+                       
                         {% endif %}
                     </div> 
-                    <br><br><br><br><br><br><br><br>
+                    
+                  <br><br><br><br><br><br><br><br>
                     
                     <div class="form-login">
                         <div class="form-login__box">
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li> {{ message }} </li>
+                                {% endfor %}
+                            </ul>
+                            <br><br>
+                            {% endif %}
                             <div class="uk-heading-line uk-text-center"><span>Checkout</span></div>
                             <form method="POST">
 								{% csrf_token %}
@@ -50,11 +76,11 @@
                                     <input type="submit" class="uk-button uk-button-danger uk-width-1-1"  value="Checkout"/></div>
                              
                                     <hr>
-                                    <input type="submit" name="signin" id="signin" class="uk-button secondary uk-width-1-1 "  value="Continue shopping"/></div>
+                                    <a  href = "{% url 'categories_and_products:index' %}"><input href = "{% url 'categories_and_products:index' %}" class="uk-button secondary uk-width-1-1 "  value="Continue shopping"/></div></a>
                                   </form>
                              
                         </div>
-                    </div>
+                    </div> 
                     
                 </div>
                 

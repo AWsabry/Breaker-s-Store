@@ -23,7 +23,6 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     ordered_date = models.DateTimeField(auto_now_add=True)
-    delivered = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
     comment = models.TextField(max_length=2000, blank=True, null=True)
     totalPrice = models.PositiveIntegerField(default=0)
@@ -46,10 +45,10 @@ class Codes(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.PROTECT,blank=True,null= True)
     code = models.CharField(max_length=1000, blank=True)
-    category = models.ForeignKey(Code_Categories, on_delete=models.CASCADE, blank=True, null=True,)
+    codeCategory = models.ForeignKey(Code_Categories, on_delete=models.CASCADE, blank=True, null=True,)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
-    order = models.ForeignKey(Order,on_delete= models.CASCADE, blank= True, null=True)
+    order = models.ForeignKey(Order,on_delete= models.SET_NULL, blank= True, null=True)
     paid = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
     addToCart = models.BooleanField(default=False)
@@ -67,7 +66,7 @@ class Codes(models.Model):
 class CartItems(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.PROTECT)
+                             on_delete=models.CASCADE)
     orderId = models.ForeignKey(
         Order, on_delete=models.CASCADE, null=True, blank=True)
     ordered = models.BooleanField(default=False)

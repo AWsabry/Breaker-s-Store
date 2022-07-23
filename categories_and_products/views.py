@@ -60,9 +60,7 @@ def GamesCodes(request, Gameslug):
     return render(request, "GamesCodes.html", context)
 
 
-def profile(request):
-    # user_data = Profile.objects.filter(user = request.user)
-    return render(request, "profile.html")
+
 
 
 def code_details(request, categoryslug):

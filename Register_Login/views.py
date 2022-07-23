@@ -27,7 +27,7 @@ from Register_Login.models import AccessToken, Profile
 
 # Importing Forms
 from Register_Login.forms import CompleteProfile, LoginForm, RegisterForm
-from cart_and_orders.models import Cart
+from cart_and_orders.models import Cart, Codes
 
 
 # Email Confirm SignUp
@@ -70,7 +70,7 @@ def send_activate_mail(request, user):
         print(email)
         email.send()
 
-        messages.success(request, _('There are an mail has been sent.'))
+        messages.success(request, _('Kindly check your inbox & junk for confirmation,'))
     else:
         messages.error(request, _('Please varify the account (an email have been sent) please wait %(time_tosend)8.0f') % {
                        'time_tosend': time_tosend}, extra_tags='danger')
@@ -110,11 +110,12 @@ def Register(request):
                     PhoneNumber=PhoneNumber,
             )
                 send_activate_mail(request, user)
+                if not user:                    
+                    messages.error(request, "Your email is not active")
+                    print('user is created but not active')
+                else:
+                    print(user, "KNown")
                 return redirect('Register_Login:email_sent')
-
-            if not user:                    
-                messages.error(request, "Your email is not active")
-                print('user is created but not active')
         else:
             print("Error")
             form = RegisterForm()
@@ -162,37 +163,29 @@ def signIn(request):
         return redirect('categories_and_products:index')
     else:
         if request.method == 'POST':
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            user = authenticate(request, email=email, password=password)
             if form.is_valid():
-                print("Post")
-                email = request.POST.get('email')
-                password = request.POST.get('password')
-                user = authenticate(request, email=email, password=password)
-                user_login(request, user)
-                messages.success(request, "You Have been logged successfully!")
-                return HttpResponseRedirect('/')
-
+                if user.is_active:
+                    print("Post")
+                    user_login(request, user)
+                    return HttpResponseRedirect('/')
+                else:
+                    print('Hello')
+                    messages.error(request, "Your account is not active, Please Register with valid Email")
             else:
-                form = LoginForm(request.POST, request.FILES)
+                messages.error(request, "Please Login with your right Credentials and check your email for activation")
                 
         return render(request, 'login.html', {'form': form})
 
 
-def completeProfile(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        city = form.data.get('city')
-        Age, phone_number, ProfilePic = form.data.get(
-            'age'), form.data.get('phone_number'), form.data.get('ProfilePic')
 
-        Profile.objects.filter(user=request.user).update(
-            city=city,
-            Age=Age,
-            ProfilePic=ProfilePic,
-            PhoneNumber=phone_number,
-        )
-        return redirect('/')
+def profile(request):
+    if request.user.is_authenticated:
+        user_codes = Codes.objects.filter(user=request.user, addToCart=True, ordered=True).order_by('-created')[:5] 
+        context = {'user_codes' : user_codes}
     else:
-        form = RegisterForm()
-    return render(request, 'completeProfile.html')
-
-
+        messages.error(request, _('* Login First Please'))
+        return redirect('Register_Login:login')
+    return render(request, "profile.html",context)

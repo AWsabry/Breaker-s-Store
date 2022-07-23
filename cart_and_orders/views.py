@@ -45,13 +45,16 @@ def send_code_email(request, order_codes):
 
 
 def yourorders(request):
+    if request.user.is_authenticated:
+        user_codes = Codes.objects.filter(
+            user=request.user, addToCart=True, ordered=True)
 
-    user_codes = Codes.objects.filter(
-        user=request.user, addToCart=True, ordered=True)
-
-    context = {
-        'codes': user_codes,
-    }
+        context = {
+            'codes': user_codes,
+        }
+    else:
+        messages.error(request, _('* Login First Please'))
+        return redirect('Register_Login:login')
 
     return render(request, 'yourorders.html', context)
 
@@ -68,10 +71,18 @@ def email_template(request):
     return render(request, 'email_template.html')
 
 
+def payment(request):
+    return render(request, 'payment.html')
+
+
 def order_sent(request):
-    order_codes = Codes.objects.filter(
-        user=request.user, addToCart=True, ordered=False)
-    print(order_codes)
+    if request.user.is_authenticated:
+        order_codes = Codes.objects.filter(
+            user=request.user, addToCart=True, ordered=False)
+        print(order_codes)
+    else:
+        messages.error(request, _('* Login First Please'))
+        return redirect('Register_Login:login')
     return render(request, 'order_sent.html', {'order_codes': order_codes})
 
 
@@ -79,14 +90,12 @@ def cart(request):
     if request.user.is_authenticated:
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
         cart = Cart.objects.filter(user=request.user)
-       
 
         context = {
             'cartItems': cartItems,
             'cart': cart,
         }
-        
-    
+
         if request.method == 'POST':
             if cartItems.exists():
                 order = Order.objects.filter(
@@ -110,13 +119,15 @@ def cart(request):
                 print('Email Sent')
 
             # Updating the codes to the order ID and the profit sum
-                
+
                 Codes.objects.filter(user=request.user, addToCart=True, ordered=False, active=True).update(
                     order_id=order_sent.id, ordered=True, active=False,)
 
-                total_Profit_from_sales =  Codes.objects.filter(ordered = True).aggregate(Sum('profit')).get('profit__sum')
+                total_Profit_from_sales = Codes.objects.filter(
+                    ordered=True).aggregate(Sum('profit')).get('profit__sum')
 
-                Codes.objects.filter(ordered=True, active=False,).update(total_profit_calculated_from_sales = total_Profit_from_sales)
+                Codes.objects.filter(ordered=True, active=False,).update(
+                    total_profit_calculated_from_sales=total_Profit_from_sales)
 
                 print(total_Profit_from_sales)
 

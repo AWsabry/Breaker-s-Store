@@ -41,28 +41,27 @@
                                 {% for cart in cart %}
                                <center> <h3 class="uk-text-lead">Total : {{cart.total_price}}</h3></center>
                                {% endfor %}
-                                 <input type="submit" class="uk-button uk-button-danger"  value="Pay now"/>
+                                 {% comment %} <input type="submit" class="uk-button uk-button-danger"  value="Pay now"/> {% endcomment %}
                                  <div class = "divider"> </div>
-                                 <a  href = "{% url 'categories_and_products:index' %}" ><input type="submit" class="uk-button uk-button-continue"  value="Continue shopping"/> </a>
+                                 {% comment %} <a  href = "{% url 'categories_and_products:index' %}" ><input type="submit" class="uk-button uk-button-continue"  value="Continue shopping"/> </a> {% endcomment %}
                             </div>
                            
                         </div>
        
-                       
                         {% endif %}
                     </div> 
                     
                   <br><br><br><br><br><br><br><br>
                     
-                    <div class="form-login">
+                   <div class="form-login">
                         <div class="form-login__box">
                             {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}
-                                <li> {{ message }} </li>
+                                <li> {{ message }}</li>
                                 {% endfor %}
                             </ul>
-                            <br><br>
+                            <br>
                             {% endif %}
                             <div class="uk-heading-line uk-text-center"><span>Checkout</span></div>
                             <form method="POST">

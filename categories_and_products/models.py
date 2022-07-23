@@ -3,6 +3,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.db import models
 
+from categories_and_products.validators import _ext_photo
+
 
 # from cart_and_orders.models import Order
 
@@ -10,10 +12,10 @@ from django.db import models
 
 
 class Game(models.Model):
-    gameName = models.CharField(max_length=250, blank=True)
+    gameName = models.CharField(max_length=250, blank=True,unique=True)
     Gameslug = models.SlugField(unique=True, db_index=True)
-    profile_image = models.ImageField(upload_to="games", blank=True)
-    background_image = models.ImageField(upload_to="games", blank=True)
+    profile_image = models.ImageField(upload_to="games", blank=True,)
+    background_image = models.ImageField(upload_to="games", blank=True,validators=[_ext_photo])
     description = models.TextField(blank=True)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -34,17 +36,17 @@ class Game(models.Model):
         verbose_name_plural = "Games"
 
 class Code_Categories(models.Model):
-    codeCategory = models.CharField(max_length=250, blank=True)
+    codeCategory = models.CharField(max_length=250, blank=True,unique=True)
     categoryslug = models.SlugField(unique=True, db_index=True)
-    image = models.ImageField(upload_to="codeCategories", blank=True)
-    background_image = models.ImageField(upload_to="codeCategories", blank=True)
+    image = models.ImageField(upload_to="codeCategories", blank=True,validators=[_ext_photo])
+    background_image = models.ImageField(upload_to="codeCategories", blank=True,validators=[_ext_photo])
     description = models.TextField(blank=True)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True,)
     price = models.FloatField(default=0)
     Most_Popular = models.BooleanField(default=False)
-    Best_Offer = models.BooleanField(default=False)
+    Best_Offer = models.BooleanField(default=False, verbose_name= "Best Products")
     New_Products = models.BooleanField(default=False)
     price_bought_by = models.FloatField(default=0)
 

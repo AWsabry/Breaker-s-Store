@@ -45,59 +45,70 @@
     <div class="page-wrapper">
         <header class="page-header">
             <div class="page-header__inner">
+                
                 <div class="page-header__sidebar">
+                    
                     <div class="page-header__menu-btn"><button class="menu-btn ico_menu is-active"></button></div>
-                    <div class="page-header__logo"><img src="{% static "img/breakers_logo.png" %}" alt="logo"> <a href="{% url 'categories_and_products:index' %}"></a>
+                    
+                    <div class="page-header__logo"> <a href="{% url 'categories_and_products:index' %}"><img src="{% static "img/breakers_logo.png" %}" alt="logo"></a>
                         <span href="{% url 'categories_and_products:index' %}"  class="page-header__logo_text">Breaker's Store</span>
                     </div>
-                </div>
-                <div class="page-header__content">
-                    <div class="page-header__search">
-                        <div class="search">
-                            <div class="search__input"><i class="ico_search"></i><input type="search" name="search" placeholder="Search"></div>
-                        </div>
-                        
-                    </div>
-                    {% if user.is_authenticated %}
-                  
-                    <div class="page-header__action">
-                       
-                    <h5 class="uk-text__intro">Welcome {{user.username}}</h5> 
-                        <a class="action-btn" href="{% url 'cart_and_orders:cart' %}"><i class="ico_shopping-cart"></i>
-                        </a>
-                        
-                        <a href = "{% url 'Register_Login:logOut' %}"> <button class="uk-button uk-button-secondary" type="button">Logout </button></a>
-                    </div>
-                    {% else %}
                     
-                    <div>
-                        <a href = "{% url 'Register_Login:login' %}"> <button class="uk-button uk-button-secondary" type="button">Login</button> </a>
-                    </div>
-                    {% endif %}
                 </div>
+          
             </div>
         </header>
         <div class="page-content">
             <aside class="sidebar is-show" id="sidebar">
                 <div class="sidebar-box">
                     <ul class="uk-nav">
+                        
+                        {% if user.is_authenticated %}
+                        <li><a><span>User: {{user.first_name}} {{user.last_name}}</span></a></li>
+                        <hr>
+                        {% endif %}
+
                         <li><a href="{% url 'categories_and_products:index' %}"><i class="ico_home"></i><span>Home</span></a></li>
                         <li class="uk-nav-header">Account</li>
-                        <li><a href="{% url 'categories_and_products:profile' %}"><i class="ico_profile"></i><span>Profile</span></a></li>
+                        <li><a href="{% url 'Register_Login:profile' %}"><i class="ico_profile"></i><span>Profile</span></a></li>
                         <li><a href="{% url 'cart_and_orders:yourorders' %}"><i class="ico_market"></i><span>Your Orders</span></a></li>
                         <li><a href="{% url 'cart_and_orders:cart' %}"><i class="ico_shopping-cart"></i><span>Cart</span></a></li>
 
+            
 
                         <li class="uk-nav-header">Main</li>
 
                         <li><a href="{% url 'categories_and_products:store' %}"><i class="ico_store"></i><span>Store</span></a></li>
                         <li><a href="{% url 'categories_and_products:games' %}"><i class="ico_play-circle"></i><span>Games</span></a></li>
 
-                        <li class="uk-nav-header">Support</li>
+                        {% comment %} <li class="uk-nav-header">Support</li>
                         <li><a href="#modal-report" data-uk-toggle> <i class="ico_call"></i><span>Contact Us</span></a></li>
-                        <li><a href="#modal-help" data-uk-toggle>   <i class="ico_help"></i><span>Help</span></a></li>
+                        <li><a href="#modal-help" data-uk-toggle>   <i class="ico_help"></i><span>Help</span></a></li> {% endcomment %}
+                        <hr>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'Register_Login:logOut' %}"><i class="ico_arrow-circle-left"></i><span>Logout</span></a></li>
+                        {% else %}
+                        <li><a href="{% url 'Register_Login:login' %}"><i class="ico_arrow-circle-right" ></i><span>Login</span></a></li>
+                        {% endif %}
+                        <li><a href = "https://www.facebook.com/breakersstoreeg" ><span>- Have a problem ? Contact Us</span></a></li>
                     </ul>
+                    <table border="0" cellpadding="10" cellspacing="0" class="social_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                        <tr>
+                        <td class="pad">
+                        <div class="alignment" style="text-align:center;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="188px">
+                        <tr>
+                        <td style="padding:0 25px 0 5px;"><a href="https://www.facebook.com/breakersstoreeg/" target="_blank"><img alt="Facebook" height="32" src="{{site}}{% static 'img/facebook2x.png'%}" style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a></td>
+                        <td style="padding:0 25px 0 5px;"><a href="https://twitter.com/" target="_blank"><img alt="Twitter" height="32" src="{{site}}{% static 'img/twitter2x.png'%}" style="display: block; height: auto; border: 0;" title="Twitter" width="32"/></a></td>
+                        <td style="padding:0 25px 0 5px;"><a href="https://instagram.com/" target="_blank"><img alt="Instagram" height="32" src="{{site}}{% static 'img/instagram2x.png'%}" style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a></td>
+                        </tr>
+                        </table>
+                        </div>
+                        </td>
+                        </tr>
+                        </table>
                 </div>
+                
             </aside>
             
             {% block content %} {% endblock content %}

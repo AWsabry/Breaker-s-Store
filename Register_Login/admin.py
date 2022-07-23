@@ -30,6 +30,6 @@ class AccessTokenAdmin(admin.ModelAdmin):
     list_display = ('user', 'token', 'created')
 
 admin.site.register(Profile, Register)
-admin.site.register(Newsletter, NewsletterAdmin)
-admin.site.register(AccessToken, AccessTokenAdmin)
+# admin.site.register(Newsletter, NewsletterAdmin)
+# admin.site.register(AccessToken, AccessTokenAdmin)
 

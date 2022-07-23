@@ -50,7 +50,7 @@
         <main class="page-first-screen">
             <div class="uk-grid uk-grid-small uk-child-width-1-2@s uk-flex-middle uk-width-1-1" data-uk-grid>
                 <div class="logo-big">
-                    <img src="{% static "img/logo/01.png" %}" alt="logo" class="animation-navspinv">
+                    <a href="{% url 'categories_and_products:index' %}"><img src="{% static "img/logo/01.png" %}" alt="logo" class="animation-navspinv"></a>
                     <span>Breaker's Store</span>
 					<br><br>
                     {% if messages %}

@@ -43,7 +43,7 @@ class Order(models.Model):
 
 class Codes(models.Model):    
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.PROTECT,blank=True,null= True)
+                             on_delete=models.SET_NULL,blank=True,null= True)
     code = models.CharField(max_length=1000, blank=True,unique=True)
     codeCategory = models.ForeignKey(Code_Categories, on_delete=models.CASCADE,)
     active = models.BooleanField(default=True)

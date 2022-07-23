@@ -142,7 +142,8 @@ def activate_user(request, token):
             if AccessTokenGenerator().check_token(token.user, token.token):       
                 token.user.is_active = True
                 token.user.save()
-                return HttpResponse('activated')
+                messages.success(request, "Your account has been activated")
+                return redirect('Register_Login:email_activated')
             return HttpResponse('already activated')
         return HttpResponse('timeout')
 
@@ -154,9 +155,13 @@ def logOut(request):
     messages.info(request, "You have successfully logged out.")
     return render(request, 'LogOut.html',)
 
+
+def email_activated(request):
+    return render(request, 'email_activated.html',)
+
+
+
 # Login View
-
-
 def signIn(request):
     form = LoginForm(request.POST, request.FILES)
     if request.user.is_authenticated:

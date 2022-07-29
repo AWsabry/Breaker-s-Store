@@ -13,6 +13,9 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 
 # Importing the utilts file
 from Register_Login.utils import AccessTokenGenerator

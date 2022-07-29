@@ -51,10 +51,10 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [
         CodesAdmin,
     ]
-    list_filter = ['user',
+    list_filter = ['paid',
                    'ordered_date',
                    ]
-    search_fields = ['user']
+    search_fields = ['user__email']
 
 
     def OrderName(self, obj):
@@ -69,8 +69,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class CodeAdmin(admin.ModelAdmin):
-    list_display = ('code','codeCategory','user','price','order','addToCart','ordered','id','active','created','total_profit_calculated_from_sales')
-    list_filter = ('codeCategory','user','addToCart','ordered','active',)
+    list_display = ('code','codeCategory','user','price','order','addToCart','ordered','paid','id','active','created')
+    list_filter = ('codeCategory','addToCart','ordered','active','paid','created')
     readonly_fields = ['total_profit_calculated_from_sales','price','profit'] 
 
     search_fields = ['code']
@@ -87,5 +87,5 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Codes,CodeAdmin)
 
 
-admin.site.register(CartItems,CartItemssAdmin)
+# admin.site.register(CartItems,CartItemssAdmin)
 # admin.site.register(BromoCode, BromoCodeAdmin)

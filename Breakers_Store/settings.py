@@ -144,6 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_EMAIL_ACTIVATE_EXPIRE = 120 # in seconds
 
+
 # SMTP CONFIGURATION
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'mail.quranfordeaf.com' 

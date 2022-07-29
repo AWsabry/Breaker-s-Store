@@ -74,9 +74,9 @@
 								<div class="uk-margin"><input class="uk-input" name="first_name" id="first_name" type="text" placeholder="First Name" required></div>
 								<div class="uk-margin"><input class="uk-input"  name="last_name" id="last_name" type="text" placeholder="Last Name" required></div>
                                 <div class="uk-margin"><input class="uk-input"  name="password1" id="password1" type="password" placeholder="Password" required></div>
-                                <div class="uk-margin"><input class="uk-input" name="Age" id="Age" type="number" min="1" max="99" placeholder="Age" required></div>
+                                <div class="uk-margin"><input class="uk-input" name="Age" id="Age" onkeypress="return /[0-9]/i.test(event.key)" min="1" max="99" placeholder="Age" required></div>
 								<div class="uk-margin"><input class="uk-input" name="city" id="city" type="text" placeholder="City" required></div>
-								<div class="uk-margin"><input class="uk-input"  name="PhoneNumber" id="PhoneNumber" type="numbers" placeholder="PhoneNumber" required></div>
+								<div class="uk-margin"><input class="uk-input"  name="PhoneNumber" id="PhoneNumber" onkeypress="return /[0-9]/i.test(event.key)" placeholder="PhoneNumber" required></div>
                                 {% comment %} <div class="uk-margin"><input  name="ProfilePic" id="ProfilePic" type="file" placeholder="Upload Your Profile Pic"></div> {% endcomment %}
                                 <div class="uk-margin">
                                     {% comment %} <button class="uk-button uk-button-danger uk-width-1-1" type="button">Register</button></div> {% endcomment %}

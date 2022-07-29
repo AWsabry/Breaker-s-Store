@@ -47,7 +47,7 @@ def send_code_email(request, order_codes):
 def yourorders(request):
     if request.user.is_authenticated:
         user_codes = Codes.objects.filter(
-            user=request.user, addToCart=True, ordered=True)
+            user=request.user, addToCart=True, ordered=True).order_by('-created')
 
         context = {
             'codes': user_codes,

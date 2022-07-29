@@ -33,7 +33,7 @@ class Game(models.Model):
         return self.gameName
 
     class Meta:
-        verbose_name_plural = "Games"
+        verbose_name_plural = "Categories"
 
 class Code_Categories(models.Model):
     codeCategory = models.CharField(max_length=250, blank=True,unique=True)
@@ -60,22 +60,10 @@ class Code_Categories(models.Model):
     
     def get_absolute_url(self):
         return reverse('categories_and_products:code_details', args=[self.categoryslug])
-
-   
-            
-
-
-    # def discountpercentage(self):
-    #     if self.oldPrice :
-    #         discountAmount = self.oldPrice - self.price
-    #         self.offPercentage = (discountAmount/self.oldPrice) * 100
-    #         return (int(self.offPercentage))
-    #     else:
-    #         pass
-    # offerPercentage = property(discountpercentage)
+     
 
     class Meta:
-        verbose_name_plural = "Code Categories"
+        verbose_name_plural = "Values"
 
 
 

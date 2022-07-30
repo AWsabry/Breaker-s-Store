@@ -50,7 +50,7 @@ def store(request):
 def GamesCodes(request, Gameslug):
     code_categories = Code_Categories.objects.filter(
         active=True, game__Gameslug=Gameslug)
-    codes = Codes.objects.filter(active = True, addToCart = False, ordered = False ,codeCategory__game__Gameslug = Gameslug, user = None).exists()
+    codes = Codes.objects.all()
     print(codes)
 
     context = {

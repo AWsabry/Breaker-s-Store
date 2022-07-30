@@ -15,6 +15,7 @@
     {% for codeCategories in codeCategories %}
     <h3 class="uk-text-lead">{{codeCategories.codeCategory}}</h3>
     {% endfor %}
+    <br><br><br>
     <div class="uk-grid uk-grid-small" data-uk-grid>
         <div class="uk-width-2-3@s">
             <div class="gallery">
@@ -89,7 +90,7 @@
                 <div class="uk-margin">
                     <form method = "POST">
                         {% csrf_token %}
-                    QTY: <input class="uk-input"  min="1" max="10"  name="Quantity" id="Quantity" onkeypress="return /[0-9]/i.test(event.key)" value = "1" placeholder="Quantity" required>
+                    QTY: <input class="uk-input-qty"  min="1" max="10"  name="Quantity" id="Quantity" onkeypress="return /[0-9]/i.test(event.key)" value = "1" placeholder="Quantity" required>
                 </div> 
             </div>
             <div class="game-profile-price">

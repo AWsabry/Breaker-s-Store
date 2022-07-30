@@ -1,18 +1,9 @@
-from pydoc import render_doc
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from sqlalchemy import false
-from Register_Login.forms import RegisterForm
-from Register_Login.models import Profile
-from cart_and_orders.forms import BromoCodeForm
 from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from Breakers_Store import settings
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from cart_and_orders.models import Cart, CartItems, Codes, Order
-from categories_and_products.models import Code_Categories
 from django.db.models import Sum
 
 # Create your views here.

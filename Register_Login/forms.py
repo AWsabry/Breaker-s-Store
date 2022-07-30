@@ -1,8 +1,6 @@
 from django import forms
-from numpy import not_equal
 from Register_Login.models import Profile
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate
 

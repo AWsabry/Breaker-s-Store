@@ -1005,6 +1005,22 @@ a:hover {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 60px;
+    padding: 0 20px;
+    border: 1px solid #F5F5F5;
+    border-radius: 15px;
+    background: #F2F2F2;
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 3.75;
+}
+
+
+.uk-input-qty {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 60px;
     width: 180px;
     padding: 0 20px;
     border: 1px solid #F5F5F5;
@@ -1016,6 +1032,7 @@ a:hover {
     font-weight: normal;
     line-height: 3.75;
 }
+
 
 .uk-input::-webkit-input-placeholder {
     color: #6E6E6E;
@@ -5823,7 +5840,7 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
 
 .youzify-group-avatar {
     border: 8px solid transparent;
-    background-color: rgba(255, 255, 255, .35);
+    background-color: transparent;
 
 }
 .messages {

@@ -147,11 +147,11 @@ AUTH_EMAIL_ACTIVATE_EXPIRE = 120 # in seconds
 
 # SMTP CONFIGURATION
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'mail.quranfordeaf.com' 
+EMAIL_HOST = 'mail.breakers-store.com' 
 EMAIL_PORT = 26
 EMAIL_USE_TLS = False 
-EMAIL_HOST_USER = 'noreply1@quranfordeaf.com'
-EMAIL_HOST_PASSWORD = '3l2b@AfEt,kw'
+EMAIL_HOST_USER = 'noreply@breakers-store.com'
+EMAIL_HOST_PASSWORD = ']gMDw}vcaU(*'
 
 MAXIMUM_SIZE_ALLOWED_PHOTO = 1000 * 312 * 2
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

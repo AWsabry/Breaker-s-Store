@@ -7,7 +7,6 @@
 
 <main class="page-main">
     <div class="uk-grid" data-uk-grid>
-        
         <div class="uk-width-2-3@l uk-width-3-3@m uk-width-3-3@s">
           <br><br>
             <h3 class="uk-text-lead">Best Products</h3>
@@ -19,12 +18,12 @@
 
                      
                         <div class="swiper-slide">
-                            <div class="recommend-slide">
+                            {% comment %} <div class="recommend-slide"> {% endcomment %}
                                 <div class="tour-slide__box">
                                     <a href="{{code_categories.get_absolute_url}}"><img src="{{ code_categories.background_image.url }}" alt="banner"></a>
 
                                 </div>
-                            </div>
+                            {% comment %} </div> {% endcomment %}
                         </div>
 
                         {% endif %}

@@ -6,19 +6,21 @@
                 <div class="uk-grid" data-uk-grid>
                     <div class="uk-width-3-3@l">
                         <div class="widjet --filters">
+                            <br><br><br>
                             <div class="widjet__head">
+                                
                                 <h3 class="uk-text-lead">Game codes </h3>
                             </div>
                 
                         </div>
                         <div class="group-row">
+
                             {% for code_categories in code_categories %}
                             <ul id="youzify-groups-list" class="item-list">
                                 <li class="group-has-avatar youzify-show-cover">
                                     <div class="youzify-group-data">
-                                        <div class="youzify-cover"><img alt="group" src="{{code_categories.image.url}}"></div>
-                                        <a href="{{code_categories.get_absolute_url}}" class="item-avatar">
-                                        </a>
+                                        <div class="youzify-cover-content">  <a href="{{code_categories.get_absolute_url}}"><img alt="group" src="{{code_categories.image.url}}"></a></div>
+                                       <br><br><br>
                                         <div class="item">
                                             <div class="item-title"><a href="{{code_categories.get_absolute_url}}" class="bp-group-home-link season-of-the-witch-home-link">{{code_categories.codeCategory}}</a></div>
                                             <div class="item-meta">
@@ -38,10 +40,10 @@
                                 </li>
 
                             </ul>
-             
-
                             {% endfor %}
+              
                         </div>
+                        
                     </div>
 
 
@@ -50,3 +52,43 @@
         </div>
     </div>
 {% endblock content %}
+
+
+
+<div class="uk-width-1-3@l uk-width-3-3@m uk-width-3-3@s">
+    <div class="js-trending">
+
+           
+            <div class="swiper-wrapper">
+                {% for code_categories in code_categories %}
+                <div class="swiper-slide">
+                    <div class="game-card --horizontal">
+                        <div class="game-card__box">
+                          
+                            <div class="game-card__media"><a href="{{code_categories.get_absolute_url}}"><img src="{{ code_categories.image.url }}" alt="Alien" /></a></div>
+                            <div class="game-card__info"><a class="game-card__title" href="{{code_categories.get_absolute_url}}"> {{code_categories.codeName}}</a>
+                                <div class="game-card__genre">{{code_categories.description}}</div>
+                                <div class="game-card__rating-and-price">
+                                    <div> </div>
+
+                                    <div class="game-card__price"><span>{{code_categories.price}} $</span></div>
+                                </div>
+                                <div class="game-card__bottom">
+                                    <div class="game-card__platform"><i class="ico_windows"></i><i class="ico_apple"></i></div>
+                                   
+                                </div>
+                            </div>
+                         
+                            
+                        </div>
+                     
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+          
+   
+            {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
+ 
+    </div>
+</div>

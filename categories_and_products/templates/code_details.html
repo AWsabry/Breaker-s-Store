@@ -22,7 +22,7 @@
                     <div class="swiper">
                         {% for codeCategories in codeCategories %}
                         {% comment %} <div class="swiper-wrapper"> {% endcomment %}
-                            <div class="swiper"><img src="{{codeCategories.game.background_image.url}}" alt="image"></div>
+                            <div class="swiper"><img src="{{codeCategories.background_image.url}}" alt="image"></div>
       
 
                         {% comment %} </div> {% endcomment %}
@@ -52,7 +52,7 @@
         <div class="uk-width-1-3@s">
             <div class="game-profile-card">
                 {% for codeCategories in codeCategories %}
-                <div class="game-profile-card__media"><img src="{{codeCategories.game.profile_image.url}}" alt="game-profile-card"></div>
+                <div class="game-profile-card__media"><img src="{{codeCategories.image.url}}" alt="game-profile-card"></div>
              
                 <div class="game-profile-card__intro"><span>{{codeCategories.description}}.</span></div>
              

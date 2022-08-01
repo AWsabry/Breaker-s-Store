@@ -114,6 +114,7 @@ h6 {
     content: "";
 }
 
+
 .ico_arrow-circle-left:before {
     color: #c00000;
     content: "";
@@ -1035,35 +1036,35 @@ a:hover {
 
 
 .uk-input::-webkit-input-placeholder {
-    color: #6E6E6E;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
 }
 
 .uk-input::-moz-placeholder {
-    color: #6E6E6E;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
 }
 
 .uk-input:-ms-input-placeholder {
-    color: #6E6E6E;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
 }
 
 .uk-input::-ms-input-placeholder {
-    color: #6E6E6E;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
 }
 
 .uk-input::placeholder {
-    color: #6E6E6E;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
@@ -1172,7 +1173,7 @@ a:hover {
     border: none;
     border-radius: 15px;
     background: #F5F5F5;
-    color: #6E6E6E;
+    color: #fff;
     font-size: 14px;
     font-style: normal;
     font-weight: normal;
@@ -2011,6 +2012,7 @@ body.dark-theme .checkout-form {
 
 .js-trending .game-card__media img {
     height: 100%;
+    
 }
 
 
@@ -2228,6 +2230,7 @@ body.dark-theme .checkout-form {
     height: 180px;
     overflow: hidden;
     border-radius: 5px;
+    -webkit-box-shadow: 10px 10px 5px #c00000;
 }
 
 .game-card__media img {
@@ -2407,9 +2410,11 @@ body.dark-theme .checkout-form {
 }
 
 .game-card.--horizontal .game-card__media {
-    width: 50%;
-    max-width: 180px;
-    max-height: 295px;
+    width: 100%;
+    max-width: 250px;
+    max-height: 350px;
+    height: 400px;
+    
 }
 
 .game-card.--horizontal .game-card__info {
@@ -4375,8 +4380,9 @@ body.dark-theme .form-login hr {
 }
 
 body.dark-theme .form-login .uk-input {
-    border: 1px solid #1A2634;
+    /* border: 1px solid #1A2634; */
     background: #1A2634;
+    color: #fff;
 }
 
 body.dark-theme .page-wrapper {
@@ -5363,7 +5369,6 @@ body.dark-theme #modal-help ul li {
 .youzify-group-data .game-card__users li {}
 
 
-
 html #youzify-groups-list .action .group-button .leave-group {
     padding: 16px;
     color: #fff;
@@ -5851,3 +5856,4 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
     color: #ffffff;
 
 }
+

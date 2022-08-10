@@ -69,7 +69,7 @@
                 </ul>
                 
                 <ul class="game-profile-card__type">
-                    <li><span>{{codeCategories.game}}</span></li>
+                    <li><a href = {{codeCategories.game.get_absolute_url}}><span>{{codeCategories.game}}</span></a></li>
              
                 </ul>
                
@@ -95,13 +95,7 @@
             </div>
             <div class="game-profile-price">
                 <div class="game-profile-price__value">${{codeCategories.price}} USD</div><a> <button class="uk-button uk-button-danger uk-width-1-1" type="submit"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
-            </div>
-            {% comment %} {% else %} {% endcomment %}
-            {% comment %} <div class="game-profile-price">
-                <div class="game-profile-price__value">${{codeCategories.price}} USD</div><a href = "{% url 'Register_Login:login' %}"> <button class="uk-button uk-button-danger uk-width-1-1" type="button"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
-            </div> {% endcomment %}
-            {% comment %} {% endif %} {% endcomment %}
-            
+            </div>            
             {% endfor %}
         </div>
     </div>

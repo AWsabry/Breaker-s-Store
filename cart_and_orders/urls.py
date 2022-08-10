@@ -17,5 +17,14 @@ urlpatterns = [
     path('email_template', views.email_template, name='email_template'),
     path('order_confirmation', view = views.order_confirmation, name='order_confirmation'),
 
+
+    # Payments
+    path('PaymentChoice', views.PaymentChoice, name='PaymentChoice'),
+    path('OpayPayment', views.OpayPayment, name='OpayPayment'),
+    path('EasyKashPayment', views.EasyKashPayment, name='EasyKashPayment'),
+    path('PaymentFailed', views.PaymentFailed, name='PaymentFailed'),
+
+    path('testing', view = views.testing, name='testing'),
+
     
 ]

@@ -6,14 +6,15 @@
             <main class="page-main">
                 <div class="uk-grid" data-uk-grid>
                     <div class="uk-width-2-3@l">
+
+                   
                     
-                       
+{% comment %}                        
                         {% if CartItems.is_empty %}
                         <div class="logo-big">
                             <span> <center> <h1>Your Cart is Empty</h2></span></center>
-
                         </div>
-                        {% else %}
+                        {% else %} {% endcomment %}
                        <br><br>
                         <div class="game-card --horizontal favourites-game">
                             {% for cartItems in cartItems %} 
@@ -41,21 +42,19 @@
                                 {% for cart in cart %}
                                <center> <h3 class="uk-text-lead">Total : {{cart.total_price}}</h3></center>
                                {% endfor %}
-                                 {% comment %} <input type="submit" class="uk-button uk-button-danger"  value="Pay now"/> {% endcomment %}
-                                 <div class = "divider"> </div>
-                                 {% comment %} <a  href = "{% url 'categories_and_products:index' %}" ><input type="submit" class="uk-button uk-button-continue"  value="Continue shopping"/> </a> {% endcomment %}
                             </div>
                            
                         </div>
        
-                        {% endif %}
+                        {% comment %} {% endif %} {% endcomment %}
                     </div> 
                     
-                  <br><br><br><br><br><br><br><br>
+                  <br><br><br><br>
                     
-                   <div class="form-login">
+                   <div class="checkout-form">
                         <div class="form-login__box">
-                            {% if messages %}
+                            
+                             {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}
                                 <li> {{ message }}</li>
@@ -63,21 +62,31 @@
                             </ul>
                             <br>
                             {% endif %}
+                            {% for cart in cart %}
                             <div class="uk-heading-line uk-text-center"><span>Checkout</span></div>
+                            <div class = "payment_totals">
+                            <h3 class="uk-text-lead">SubTotal : {{cart.total_price}}</h3>
+                            <h3 class="uk-text-lead">Total + Taxes : {{total_price_after_taxes}} </h3>
+                            </div>
+                            {% endfor %}
+                            
+                            <br><br>
+                            
+
                             <form method="POST">
 								{% csrf_token %}
-                   
-                                <div class="uk-form-controls"><textarea class="uk-textarea" name="details" placeholder="Order Note.."></textarea></div>
-
                                 <div class="uk-margin">
                                     
-                                    <br><br>
-                                    <input type="submit" class="uk-button uk-button-danger uk-width-1-1"  value="Checkout"/></div>
-                             
+                                    <hr>
+                                    
+                                    <a  href = " {% url 'cart_and_orders:PaymentChoice' %}"><input href = "{% url 'categories_and_products:index' %}"  class="uk-button uk-button-danger uk-width-1-1"  value="Payment"/></div></a>
                                     <hr>
                                     <a  href = "{% url 'categories_and_products:index' %}"><input href = "{% url 'categories_and_products:index' %}" class="uk-button secondary uk-width-1-1 "  value="Continue shopping"/></div></a>
                                   </form>
-                             
+                                  <br>
+                                  <div class="">
+                                    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payments.jpeg" %}" width="700px" height="500px" /> </a>
+                                    </div>
                         </div>
                     </div> 
                     

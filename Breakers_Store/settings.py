@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -153,5 +156,5 @@ EMAIL_USE_TLS = False
 EMAIL_HOST_USER = 'noreply@breakers-store.com'
 EMAIL_HOST_PASSWORD = ']gMDw}vcaU(*'
 
-MAXIMUM_SIZE_ALLOWED_PHOTO = 1000 * 312 * 4
+MAXIMUM_SIZE_ALLOWED_PHOTO = 1000 * 312 * 8
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

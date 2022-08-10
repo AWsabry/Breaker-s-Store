@@ -10,7 +10,7 @@ from django.db.models import Sum
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,unique=True)
     total_price = models.FloatField(default=0)
     ordered_date = models.DateTimeField(auto_now_add=True)
     
@@ -26,8 +26,8 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     comment = models.TextField(max_length=2000, blank=True, null=True)
     totalPrice = models.PositiveIntegerField(default=0)
+    total_price_after_taxes =  models.PositiveIntegerField(default=0)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    
 
     def __str__(self):
         return str(self.id)
@@ -39,6 +39,13 @@ class Order(models.Model):
         if self.coupon:
             total -= self.coupon.amount
         return total
+
+@receiver(pre_save, sender=Order)
+def calculatedFromSales(sender, **kwargs):
+    orders = kwargs['instance']
+    total_price_after_taxes = orders.totalPrice + 2 + (0.02 * orders.totalPrice)
+    orders.total_price_after_taxes = total_price_after_taxes
+
 
 
 class Codes(models.Model):    

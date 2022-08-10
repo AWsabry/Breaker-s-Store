@@ -1,0 +1,37 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% load static %}
+
+
+<meta content="Templines" name="author">
+<meta content="Breaker's Store is a Gaming website for buying codes for promoting your games." name="description">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="true">
+<meta name="format-detection" content="telephone=no">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+<meta name='og:image' content={% static "img/breakers_logo.png" %}>
+
+<link  type="image/x-icon" rel="shortcut icon"  href="{% static "img/breakers_logo.png" %}"/>
+<link  rel="stylesheet"  href="{% static "css/libs.min.css" %}"/>
+<link  rel="stylesheet"  href="{% static "css/main.css" %}"/>
+<link  rel="stylesheet"   href="{% static "css/youzify.min.css" %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+
+<br><br><br>
+<center>
+
+
+    <br>
+    <h3 class="uk-text-lead">Payment Methods : {{cart.total_price}}</h3>
+    <br><br>
+    <br><br>
+    <div class="leftpayment">
+    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/opay.png" %}" width="400px" height="320px" /> </a>
+    </div><!-- comment to close gap
+    --><div class="rightpayment">
+    <a href = "{% url 'cart_and_orders:EasyKashPayment' %}" ><img src="{% static "img/easykash.png" %}" width="400" height="400" /></a>
+    </div>
+
+
+</center>

@@ -1,0 +1,9 @@
+Change Font --
+Values styling vertically -- done
+hyperlink the background -- done
+Profile in the list -- done
+Xbox, Playstation, Windows, Mac -- 
+Field Color -- Done
+relating game in details to the game page -- done
+removing profile from page -- done
+change store styling -- Done

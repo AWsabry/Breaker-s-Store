@@ -1948,9 +1948,16 @@ a:hover {
 
 body.dark-theme .checkout-form {
     -webkit-box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    margin-left: auto;
+    padding: 60px 45px;
     background: transparent;
     box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
-    color: #ACACAC;
 }
 
 
@@ -3977,6 +3984,7 @@ body.dark-theme .checkout-form {
 
 .game-profile-card__media img {
     width: 100%;
+    
 }
 
 .game-profile-card__intro {
@@ -4368,6 +4376,8 @@ body.dark-theme .form-login {
     box-shadow: 0px 30px 70px rgba(0, 0, 0, 0.03);
     color: #ACACAC;
 }
+
+
 
 body.dark-theme .form-login .uk-heading-line > :after,
 body.dark-theme .form-login .uk-heading-line > :before {
@@ -5857,3 +5867,27 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
 
 }
 
+
+.paymentsview {
+    display:inline-block;
+    align-items: space-between;
+    justify-content: space-between;
+    vertical-align:middle;
+    height: 160px;
+    width: 200px;
+
+}
+
+.leftpayment, .rightpayment {
+    width: 50%;
+    height: 100%;
+    display:inline-block;
+    text-align: center;
+    vertical-align:middle;
+  }
+
+
+.payment_totals{
+    text-align: left;
+    justify-content: space-around;
+}

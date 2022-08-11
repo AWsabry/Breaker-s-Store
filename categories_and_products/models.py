@@ -40,7 +40,7 @@ class Code_Categories(models.Model):
     categoryslug = models.SlugField(unique=True, db_index=True)
     image = models.ImageField(upload_to="codeCategories", blank=True,validators=[_ext_photo])
     background_image = models.ImageField(upload_to="codeCategories", blank=True,validators=[_ext_photo])
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True,help_text='Make sure to write description for all categories to handel all your design',default= ' ' )
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True,)

@@ -25,9 +25,12 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
     comment = models.TextField(max_length=2000, blank=True, null=True)
-    totalPrice = models.PositiveIntegerField(default=0)
-    total_price_after_taxes =  models.PositiveIntegerField(default=0)
+    totalPrice = models.FloatField(default=0)
+    total_price_after_taxes =  models.FloatField(default=0,verbose_name='After Taxes')
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    order_response = models.CharField(max_length=1000, blank=True,)
+    paid_by = models.CharField(max_length=1000, blank=True,)
+
 
     def __str__(self):
         return str(self.id)
@@ -83,7 +86,6 @@ class CartItems(models.Model):
     orderId = models.ForeignKey(
         Order, on_delete=models.CASCADE, null=True, blank=True)
     ordered = models.BooleanField(default=False)
-    shipped = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
     codeCategory = models.ForeignKey(Code_Categories, on_delete=models.CASCADE)
     price = models.FloatField(default=0)

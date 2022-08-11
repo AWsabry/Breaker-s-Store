@@ -41,12 +41,14 @@ class CodesAdmin(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['user',
                     'totalPrice',
+                    'total_price_after_taxes',
                     'paid',
                     'ordered_date',
                     'id',
                     'OrderName',
                     'PhoneNumber',
-
+                    'order_response',
+                    'paid_by',
                     ]
     inlines = [
         CodesAdmin,

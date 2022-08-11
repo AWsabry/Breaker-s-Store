@@ -21,7 +21,7 @@
                         {% for codes in codes %} <br><br>
                         <div class="game-card --horizontal favourites-game">
                             <div class="game-card__box">
-                                <div class="game-card__media"><a> <img src="{{codes.codeCategory.image.url}}" alt="Werewolf Complex" /></a></div>
+                                <div class="widjet-game__media"><a><img src="{{codes.codeCategory.image.url}}" alt="image"></a></div>
                                 <div class="game-card__info"><a class="game-card__title" href="{{cartItems.codeCategory.get_absolute_url}}">Product : {{codes.code}}</a>
                                     <div class="game-card__genre">Category : {{codes.codeCategory.codeCategory}} </div>
                                     <div class="game-card__genre">Date : {{codes.created}} </div>

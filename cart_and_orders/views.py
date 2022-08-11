@@ -1,7 +1,8 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
+from django.utils import timezone
 from http.client import HTTPResponse
 from http.server import HTTPServer
-from urllib import response
+from xmlrpc.client import DateTime
 from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
@@ -123,11 +124,14 @@ def order_sent(request):
 def cart(request):
     if request.user.is_authenticated:
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
+
         cart = Cart.objects.filter(user=request.user)
         gettingcart = Cart.objects.get(user=request.user,)
         total_price_after_taxes = gettingcart.total_price + \
             2 + (0.02 * gettingcart.total_price)
+
         print(total_price_after_taxes)
+
         print(gettingcart.total_price)
 
         if request.method == 'POST':
@@ -229,8 +233,34 @@ def PaymentFailed(request):
 
 
 def testing(request):
+    cartItems = CartItems.objects.get(user=request.user, ordered=False, id=id)
+    now = timezone.now()
+
+    periodic_time = cartItems.created + timedelta(days=0, hours=1)
+    print(type(now))
+    print(type(periodic_time))
+
+    if now > periodic_time:
+        print("An hour has been Passed")
+    else:
+        print("hour is not Passed yet")
     return render(request, 'testing.html')
 
 
 def EasyKashPayment(request):
     return render(request, 'EasyKashPayment.html')
+
+
+def deleting(request, id):
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user)
+        cartItem = CartItems.objects.get(user=request.user, ordered=False,id=id)
+        deleteing = CartItems.objects.filter(user=request.user, ordered=False,id=id).delete()
+        if deleteing:
+            new_total_after_deleting = cart.total_price - (cartItem.price * cartItem.quantity)
+            Codes.objects.filter(
+                user=request.user, addToCart=True, ordered=False).update(user = None, addToCart = False)
+            Cart.objects.filter(user=request.user).update(total_price = new_total_after_deleting)
+        print(new_total_after_deleting)
+        return redirect('cart_and_orders:cart')
+    return render(request, 'deleting.html')

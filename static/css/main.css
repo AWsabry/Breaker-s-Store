@@ -1157,7 +1157,26 @@ a:hover {
     transition: all 0.25s linear;
 }
 
+.ico_trash {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 24px;
+    -webkit-transition: all 0.25s linear;
+    -o-transition: all 0.25s linear;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    color: #353535;
+    font-size: 6px;
+    transition: all 0.25s linear;
+}
+
 .ico_more:hover {
+    color: #c00000;
+}
+
+.ico_trash:hover {
     color: #c00000;
 }
 
@@ -3105,6 +3124,14 @@ body.dark-theme .checkout-form {
     font-size: 6px;
 }
 
+.chat-user-list__head a.ico_trash {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    color: #646464;
+    font-size: 6px;
+}
+
 .chat-user-list__search {
     margin-bottom: 30px;
 }
@@ -4320,7 +4347,15 @@ body.dark-theme .ico_more {
     color: #fff;
 }
 
+body.dark-theme .ico_trash {
+    color: #fff;
+}
+
 body.dark-theme .ico_more:hover {
+    color: #c00000;
+}
+
+body.dark-theme .ico_trash:hover {
     color: #c00000;
 }
 
@@ -5623,8 +5658,20 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
     color: #fff !important;
 }
 
+.my-game-item__more a:hover .ico_trash,
+.game-card__more a:hover .ico_trash,
+.user-item__more:hover .ico_trash,
+.item__more a:hover .ico_trash {
+    color: #fff !important;
+}
+
 
 .ico_more {
+    position: relative;
+    z-index: 2;
+}
+
+.ico_trash {
     position: relative;
     z-index: 2;
 }
@@ -5890,4 +5937,15 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
 .payment_totals{
     text-align: left;
     justify-content: space-around;
+}
+
+
+.trash{
+    width:20%;
+    margin: 90px;;
+    color: #FFFFFF;
+    align-content: left;
+    display:inline-block;
+    justify-content: space-between;
+    
 }

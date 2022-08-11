@@ -13,31 +13,20 @@
             <div class="js-recommend">
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                        {% for code_categories in code_categories %}
-                        {% if code_categories.Best_Offer == True %}
-
-                     
+                        {% for poster in poster %}
+                   
                         <div class="swiper-slide">
                             {% comment %} <div class="recommend-slide"> {% endcomment %}
                                 <div class="tour-slide__box">
-                                    <a href="{{code_categories.get_absolute_url}}"><img src="{{ code_categories.background_image.url }}" alt="banner"></a>
+                                    <img src="{{ poster.background_image.url }}" alt="banner">
 
                                 </div>
                             {% comment %} </div> {% endcomment %}
                         </div>
-
-                        {% endif %}
                         {% endfor %}
-                        
-
-
+                    
 
                     </div>
-                    {% comment %} <div class="swipper-nav">
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div> {% endcomment %}
-                    {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ from django.contrib import admin
 from cart_and_orders.admin import CodesAdmin
 from cart_and_orders.models import Codes
 
-from categories_and_products.models import Game, PromoCode,Code_Categories
+from categories_and_products.models import Game, Poster, PromoCode,Code_Categories
 
 # Register your models here.
 
@@ -40,9 +40,11 @@ class PromoCodeAdmin(admin.ModelAdmin):
     search_fields = ['Promocode']
 
 
+class PosterAdmin(admin.ModelAdmin):
+    list_display = ('id', "name", 'active',)
 
 
-
+admin.site.register(Poster,PosterAdmin)
 admin.site.register(Game, GameAdmin)
 admin.site.register(Code_Categories, Code_Categories_Admin)
 

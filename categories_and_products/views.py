@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from Register_Login.models import Profile
 from cart_and_orders.models import Cart, CartItems, Codes, Order
 from categories_and_products.forms import QuantityForm
-from categories_and_products.models import Code_Categories, Game
+from categories_and_products.models import Code_Categories, Game, Poster
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.utils.translation import gettext as _
@@ -14,7 +14,7 @@ import datetime
 
 
 def index(request):
-
+    poster = Poster.objects.filter(active=True)
     code_categories = Code_Categories.objects.filter(active=True)
     games = Game.objects.filter(active=True,)
     steamGames = Game.objects.filter(active=True,gameName = "Steam Wallet Codes (TL)")
@@ -22,7 +22,8 @@ def index(request):
     context = {
         "code_categories": code_categories,
         'games': games,
-        "steamGames" : steamGames
+        "steamGames" : steamGames,
+        'poster' : poster
     }
     return render(request, 'index.html', context)
 

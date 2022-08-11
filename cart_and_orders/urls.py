@@ -25,6 +25,7 @@ urlpatterns = [
     path('PaymentFailed', views.PaymentFailed, name='PaymentFailed'),
 
     path('testing', view = views.testing, name='testing'),
-
+    
+    path('<int:id>', views.deleting, name='deleting'),
     
 ]

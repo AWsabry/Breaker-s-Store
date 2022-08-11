@@ -66,6 +66,10 @@ class Code_Categories(models.Model):
         verbose_name_plural = "Values"
 
 
+class Poster(models.Model):
+    name = models.CharField(max_length=250, blank=True,unique=True)
+    background_image = models.ImageField(upload_to="codeCategories", blank=True,validators=[_ext_photo])
+    active = models.BooleanField(default=True)
 
 
 

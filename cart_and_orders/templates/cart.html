@@ -27,7 +27,7 @@
                             
                             <div>
                                 {% for cart in cart %}
-                               <center> <h3 class="uk-text-lead">Total : {{cart.total_price}}</h3></center>
+                               <center> <h3 class="uk-text-lead">SubTotal : {{cart.total_price}}</h3></center>
                                {% endfor %}
                             </div>
                            
@@ -51,13 +51,12 @@
                             {% endif %}
                             {% for cart in cart %}
                             <div class="uk-heading-line uk-text-center"><span>Checkout</span></div>
-                            <div class = "payment_totals">
-                            <h3 class="uk-text-lead">SubTotal : {{cart.total_price}}</h3>
-                            <h3 class="uk-text-lead">Total + Taxes : {{total_price_after_taxes}} </h3>
-                            </div>
+                            <center> <h5 class = "notes"> * Fees are added depending on the payment method.</h5></center>
+
+                            <br>
+                       
                             {% endfor %}
                             
-                            <br><br>
                             
 
                             <form method="POST">
@@ -78,7 +77,7 @@
                                   </form>
                                   <br>
                                   <div>
-                                    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payments.jpeg" %}" width="700px" height="500px" /> </a>
+                                    <a href = "{% url 'cart_and_orders:CardsPayment' %}" > <img src="{% static "img/payments.jpeg" %}" width="700px" height="500px" /> </a>
                                     </div>
                                 
                         </div>

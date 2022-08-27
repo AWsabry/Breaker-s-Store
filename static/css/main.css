@@ -15,7 +15,7 @@
 html,
 body {
     color: #353535;
-    font-family: "Nunito";
+    font-family: "IBM Plex Sans";
     font-size: 16px;
     font-style: normal;
     font-weight: normal;
@@ -28,7 +28,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Inter";
+    font-family: "IBM Plex Sans";
     font-weight: 700;
 }
 
@@ -53,6 +53,7 @@ h6 {
 .ico_apple:before,
 .ico_arrow-circle-left:before,
 .ico_arrow-circle-right:before,
+.ico_arrow-circle-right-white:before,
 .ico_attach-circle:before,
 .ico_call:before,
 .ico_chats:before,
@@ -125,6 +126,12 @@ h6 {
     color: #c00000;
     content: "";
 }
+
+.ico_arrow-circle-right-white:before {
+    color: #fff;
+    content: "";
+}
+
 
 .ico_attach-circle:before {
     content: "";
@@ -352,13 +359,13 @@ a:hover {
 .user-item__name,
 .activities-item__title,
 .stream-item__title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 
 
 .game-card__title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .widjet .uk-range {
@@ -377,7 +384,7 @@ a:hover {
 
 
 html #youzify-groups-list .item .item-title a {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Marcellus', sans-serif;
     font-size: 18px;
     color: #222;
     font-weight: 500;
@@ -1079,7 +1086,7 @@ a:hover {
 }
 
 .uk-button {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     -webkit-box-align: center;
     -ms-flex-align: center;
     -webkit-box-pack: center;
@@ -2086,7 +2093,7 @@ body.dark-theme .checkout-form {
 
 
 .recommend-slide__logo {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color: #fff;
     font-size: 26px;
     font-weight: 500;
@@ -2508,6 +2515,10 @@ body.dark-theme .checkout-form {
 }
 
 .widjet__head h3.uk-text-lead {
+    margin-bottom: 0;
+}
+
+.widjet__head h5.notes {
     margin-bottom: 0;
 }
 
@@ -2977,7 +2988,7 @@ body.dark-theme .checkout-form {
 }
 
 .my-game-item__letter {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-box-align: center;
@@ -3024,7 +3035,7 @@ body.dark-theme .checkout-form {
 }
 
 .creat-list-btn {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-box-align: center;
@@ -3702,7 +3713,7 @@ body.dark-theme .checkout-form {
     font-style: normal;
     font-weight: 500;
     line-height: 1.31;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .friend-requests-item__action {
@@ -4342,6 +4353,11 @@ body.dark-theme .uk-button-primary {
 body.dark-theme .uk-text-lead {
     color: #fff;
 }
+
+body.dark-theme .notes {
+    color: #fff;
+}
+
 
 body.dark-theme .ico_more {
     color: #fff;
@@ -5211,7 +5227,7 @@ body.dark-theme #modal-help ul li {
 }
 
 .sidebar-box .uk-nav li a {
-    font-family: 'Inter', serif;
+    font-family: 'IBM Plex Sans', serif;
     font-size: 13px;
     font-weight: 400;
 }
@@ -5221,13 +5237,20 @@ body.dark-theme #modal-help ul li {
 }
 
 .page-header__logo_text {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Marcellus', sans-serif;
     font-weight: 600;
 }
 
 .uk-text-lead {
-    font-family: 'Marcellus', serif;
+    font-family: 'IBM Plex Sans', serif;
     font-size: 26px;
+    color: #1f1f1f;
+    margin-bottom: 17px;
+}
+
+.notes {
+    font-family: 'IBM Plex Sans', serif;
+    font-size: 18px;
     color: #1f1f1f;
     margin-bottom: 17px;
 }
@@ -5237,14 +5260,14 @@ body.dark-theme #modal-help ul li {
     color: #1f1f1f;
     display: block;
     margin-bottom: 10px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
 }
 
 
 
 .my-game-item__title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 500;
     padding-top: 14px;
     font-size: 17px;
@@ -5252,7 +5275,7 @@ body.dark-theme #modal-help ul li {
 
 .uk-nav-header {
     color: #1f1f1f !important;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600 !important;
     font-weight: normal;
 }

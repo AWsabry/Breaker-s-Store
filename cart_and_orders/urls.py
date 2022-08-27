@@ -20,7 +20,9 @@ urlpatterns = [
 
     # Payments
     path('PaymentChoice', views.PaymentChoice, name='PaymentChoice'),
-    path('OpayPayment', views.OpayPayment, name='OpayPayment'),
+    path('CardsPayment', views.CardsPayment, name='CardsPayment'),
+    path('WalletPayment', views.WalletPayment, name='WalletPayment'),
+
     path('EasyKashPayment', views.EasyKashPayment, name='EasyKashPayment'),
     path('PaymentFailed', views.PaymentFailed, name='PaymentFailed'),
 

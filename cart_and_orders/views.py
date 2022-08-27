@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from cart_and_orders.models import Cart, CartItems, Codes, Order
 from django.db.models import Sum
-# import requests
 import requests
 # Create your views here.
 
@@ -166,7 +165,7 @@ def PaymentChoice(request):
     return render(request, 'PaymentChoice.html')
 
 
-def OpayPayment(request):
+def CardsPayment(request):
     if request.user.is_authenticated:
 
         # Getting Refrence ID to link between payment & dashboard & store it in the session
@@ -225,7 +224,71 @@ def OpayPayment(request):
             return redirect(str(payment_url),)
     else:
         messages.error(request, _('* Login First Please'), extra_tags='danger')
-    return render(request, 'OpayPayment.html')
+    return render(request, 'CardsPayment.html')
+
+
+
+
+def WalletPayment(request):
+    if request.user.is_authenticated:
+
+        # Getting Refrence ID to link between payment & dashboard & store it in the session
+        refrence = str(datetime.now()) + str(request.user.username)
+        request.session['refrence'] = refrence
+
+# Calculating the Taxes and adding it
+        gettingcart = Cart.objects.get(user=request.user,)
+        total_price_after_taxes = gettingcart.total_price + \
+            2 + (0.021 * gettingcart.total_price)
+
+
+# Sending Payment via API
+
+        sending_payment_request = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
+            'MerchantId': '281822021543671',
+            'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
+        },
+            json={
+            "country": "EG",
+            "reference": refrence,
+            "amount": {
+                "total": (total_price_after_taxes * 100),
+                "currency": "EGP"
+            },
+            # Payment success page after payment
+            "returnUrl": "http://127.0.0.1:8000/order_confirmation",
+            "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
+            "callbackUrl": "https://your-call-back-url",
+            "expireAt": 300,
+            "userInfo": {
+                "userEmail": str(request.user),
+                "userId": str(request.user.id),
+                "userMobile": str(request.user.PhoneNumber),
+                "userName": str(request.user.username),
+            },
+            "productList": [
+                {
+                    "productId": "productId",
+                    "name": "name",
+                    "description": "description",
+                    "price": 100,
+                    "quantity": 2,
+                }
+            ],
+            "payMethod": "MWALLET"
+        })
+
+        print("URL", sending_payment_request.json())
+
+# Checking the success code to continue the operation
+        if sending_payment_request.json().get('code') != '00000':
+            return redirect('cart_and_orders:PaymentFailed')
+        else:
+            payment_url = sending_payment_request.json().get('data').get('cashierUrl')
+            return redirect(str(payment_url),)
+    else:
+        messages.error(request, _('* Login First Please'), extra_tags='danger')
+    return render(request, 'WalletPayment.html')
 
 
 def PaymentFailed(request):

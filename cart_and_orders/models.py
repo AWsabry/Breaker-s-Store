@@ -54,7 +54,7 @@ class Order(models.Model):
 def calculatedFromSales(sender, **kwargs):
     orders = kwargs['instance']
     total_price_after_taxes = orders.totalPrice + \
-        2 + (0.02 * orders.totalPrice)
+        2 + (0.021 * orders.totalPrice)
     orders.total_price_after_taxes = total_price_after_taxes
 
 

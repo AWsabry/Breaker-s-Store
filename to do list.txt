@@ -1,0 +1,29 @@
+1- Games Instruction Box Dashboard -- Done
+
+2- FONT + Payment Methods host 
+
+3- Opay Reference Code Test 
+
+4- Forget Pass
+
+5- Code removed from cart after 10-15 min without action 
+
+6- code price changing at all places 
+
+7- Remove View card button -- Done
+
+8- Quantity + and - and make the box samller 
+
+9- remove release date and platforms -- Done
+
+10- Fix Cart "excess 18 egp m4 3arf leh ?"
+
+11- Change "Games" to " Products" / Change "Store to "All Cards"  ونخلي الجيمز هي اللي فوق ستور -- Done
+
+12- In my orders section : Ability to copy the product code
+
+13- Email Background change 
+
+
+
+

@@ -80,7 +80,7 @@ class CodeAdmin(admin.ModelAdmin):
 
 
 class CartItemssAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id','created')
 
 
 
@@ -89,5 +89,5 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Codes,CodeAdmin)
 
 
-# admin.site.register(CartItems,CartItemssAdmin)
+admin.site.register(CartItems,CartItemssAdmin)
 # admin.site.register(BromoCode, BromoCodeAdmin)

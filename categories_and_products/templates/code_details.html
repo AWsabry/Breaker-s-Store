@@ -26,20 +26,16 @@
       
 
                         {% comment %} </div> {% endcomment %}
-                        {% endfor %}
+                      
                     <div class="news-feed news-feed-post">
 
 
                             <h4 class="post-name">How to use the codes 🧐 </h4>
                             <div class="post-body">
-                                <p>Dolore magna aliqua quis nostrud exercitation consequat. 
-                                <br>Duis aute irure do lorin reprehendert sed ipsum nulla pariatur officia deserunt mollit anim id est laborum.<br>
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam.</p>
-                
-                
-                
+                                {{codeCategories.instruction}}
                             </div>
                     </div>
+                    {% endfor %}
                         
                     </div>
                     
@@ -53,20 +49,6 @@
             <div class="game-profile-card">
                 {% for codeCategories in codeCategories %}
                 <div class="game-profile-card__media"><img src="{{codeCategories.image.url}}" alt="game-profile-card"></div>
-             
-                <div class="game-profile-card__intro"><span>{{codeCategories.description}}.</span></div>
-             
-                <ul class="game-profile-card__list">
-             
-                    <li>
-                        <div>Release date:</div>
-                        <div>{{codeCategories.created}}</div>
-                    </li>
-                    <li>
-                        <div>Platforms:</div>
-                        <div class="game-card__platform"><i class="ico_windows"></i><i class="ico_apple"></i></div>
-                    </li>
-                </ul>
                 
                 <ul class="game-profile-card__type">
                     <li><a href = {{codeCategories.game.get_absolute_url}}><span>{{codeCategories.game}}</span></a></li>
@@ -75,7 +57,6 @@
                
             </div>
 
-            {% comment %} {% if user.is_authenticated %} {% endcomment %}
             
             <div class="game-profile-price" >
                 {% if messages %}

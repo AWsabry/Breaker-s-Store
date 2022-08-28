@@ -1,5 +1,6 @@
 import datetime
 from operator import mod
+from urllib import request
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
@@ -23,6 +24,11 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def calculatingTotal(request,self):
+        cartItem  = CartItems.objects.filter(user = request.user,ordered = False, paid = False)
+        print(cartItem.price) 
+        return
 
 
 class Order(models.Model):

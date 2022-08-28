@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from email import message
 from django.utils import timezone
 from http.client import HTTPResponse
 from http.server import HTTPServer
@@ -35,9 +36,11 @@ def yourorders(request):
     if request.user.is_authenticated:
         user_codes = Codes.objects.filter(
             user=request.user, addToCart=True, ordered=True).order_by('-created')
+        order = Order.objects.filter(user = request.user,paid = True).order_by('-ordered_date')
 
         context = {
             'codes': user_codes,
+            'order' : order,
         }
     else:
         messages.error(request, _('* Login First Please'))
@@ -123,7 +126,8 @@ def order_sent(request):
 def cart(request):
     if request.user.is_authenticated:
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
-
+        cartItem  = CartItems.objects.filter(user = request.user,ordered = False, paid = False)
+        print(cartItem) 
         cart = Cart.objects.filter(user=request.user)
         gettingcart = Cart.objects.get(user=request.user,)
         total_price_after_taxes = gettingcart.total_price + \
@@ -244,9 +248,9 @@ def WalletPayment(request):
 
 # Sending Payment via API
 
-        sending_payment_request = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
-            'MerchantId': '281822021543671',
-            'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
+        sending_payment_request = requests.post('https://api.opaycheckout.com/api/v1/international/cashier/create', headers={
+            'MerchantId': '281822021682889',
+            'Authorization': 'Bearer OPAYPUB16450080851810.3897884686987133',
         },
             json={
             "country": "EG",
@@ -256,9 +260,9 @@ def WalletPayment(request):
                 "currency": "EGP"
             },
             # Payment success page after payment
-            "returnUrl": "http://127.0.0.1:8000/order_confirmation",
+            "returnUrl": "http://127.0.0.1:8000",
             "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
-            "callbackUrl": "https://your-call-back-url",
+            "callbackUrl": "http://127.0.0.1:8000/order_confirmation",
             "expireAt": 300,
             "userInfo": {
                 "userEmail": str(request.user),
@@ -275,7 +279,7 @@ def WalletPayment(request):
                     "quantity": 2,
                 }
             ],
-            "payMethod": "MWALLET"
+            "payMethod": "ReferenceCode"
         })
 
         print("URL", sending_payment_request.json())
@@ -296,17 +300,22 @@ def PaymentFailed(request):
 
 
 def testing(request):
-    cartItems = CartItems.objects.get(user=request.user, ordered=False, id=id)
+    cartItemID = CartItems.objects.filter(user=request.user, ordered=False,).first().id
+    print(cartItemID)
+    request.session['cartItemID'] = cartItemID
+
+    cartItems = CartItems.objects.filter(user=request.user, ordered=False,).first()
     now = timezone.now()
 
-    periodic_time = cartItems.created + timedelta(days=0, hours=1)
+    periodic_time = cartItems.created + timedelta(days=0, hours=0, minutes= 1 , seconds=0)
     print(type(now))
     print(type(periodic_time))
-
     if now > periodic_time:
-        print("An hour has been Passed")
+        messages.error(request, _('* Your Cart has been expired'), extra_tags='danger')
+        return redirect('cart_and_orders:deleting',cartItemID)
+
     else:
-        print("hour is not Passed yet")
+        print("An has not been Passed yet")
     return render(request, 'testing.html')
 
 
@@ -315,10 +324,12 @@ def EasyKashPayment(request):
 
 
 def deleting(request, id):
+    cartItemID = request.session.get('cartItemID')
+    print(cartItemID)
     if request.user.is_authenticated:
         cart = Cart.objects.get(user=request.user)
         cartItem = CartItems.objects.get(user=request.user, ordered=False,id=id)
-        deleteing = CartItems.objects.filter(user=request.user, ordered=False,id=id).delete()
+        deleteing = CartItems.objects.filter(user=request.user, ordered=False,id=id or cartItemID).delete()
         if deleteing:
             new_total_after_deleting = cart.total_price - (cartItem.price * cartItem.quantity)
             Codes.objects.filter(

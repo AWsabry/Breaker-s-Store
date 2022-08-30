@@ -1,3 +1,4 @@
+from ast import GtE
 from datetime import datetime, timedelta
 from email import message
 from django.utils import timezone
@@ -12,6 +13,8 @@ from django.core.mail import EmailMultiAlternatives
 from cart_and_orders.models import Cart, CartItems, Codes, Order
 from django.db.models import Sum
 import requests
+
+from categories_and_products.models import Code_Categories
 # Create your views here.
 
 
@@ -36,11 +39,12 @@ def yourorders(request):
     if request.user.is_authenticated:
         user_codes = Codes.objects.filter(
             user=request.user, addToCart=True, ordered=True).order_by('-created')
-        order = Order.objects.filter(user = request.user,paid = True).order_by('-ordered_date')
+        order = Order.objects.filter(
+            user=request.user, paid=True).order_by('-ordered_date')
 
         context = {
             'codes': user_codes,
-            'order' : order,
+            'order': order,
         }
     else:
         messages.error(request, _('* Login First Please'))
@@ -124,18 +128,36 @@ def order_sent(request):
 
 
 def cart(request):
+    now = timezone.now()
+    cartItemschecking = CartItems.objects.filter(
+        user=request.user, ordered=False,).last()
+    print(cartItemschecking)
+
     if request.user.is_authenticated:
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
-        cartItem  = CartItems.objects.filter(user = request.user,ordered = False, paid = False)
-        print(cartItem) 
         cart = Cart.objects.filter(user=request.user)
         gettingcart = Cart.objects.get(user=request.user,)
         total_price_after_taxes = gettingcart.total_price + \
             2 + (0.02 * gettingcart.total_price)
-
-        print(total_price_after_taxes)
-
-        print(gettingcart.total_price)
+        if cartItemschecking != None:
+            periodic_time = cartItemschecking.created + \
+                timedelta(days=0, hours=0, minutes=0, seconds=30)
+            if now > periodic_time:
+                messages.error(request, _(
+                    '* Your Cart has been expired'), extra_tags='danger')
+                deleteing = CartItems.objects.filter(
+                    user=request.user, ordered=False,).delete()
+                if deleteing:
+                    Codes.objects.filter(
+                        user=request.user, addToCart=True, ordered=False).update(user=None, addToCart=False)
+                    Cart.objects.filter(
+                        user=request.user).update(total_price=0)
+                print("DELETED")
+            else:
+                pass
+        else:
+            pass
+        print("An has not been Passed yet")
 
         if request.method == 'POST':
             if cartItems.exists():
@@ -231,8 +253,6 @@ def CardsPayment(request):
     return render(request, 'CardsPayment.html')
 
 
-
-
 def WalletPayment(request):
     if request.user.is_authenticated:
 
@@ -300,23 +320,28 @@ def PaymentFailed(request):
 
 
 def testing(request):
-    cartItemID = CartItems.objects.filter(user=request.user, ordered=False,).first().id
-    print(cartItemID)
-    request.session['cartItemID'] = cartItemID
+ 
 
-    cartItems = CartItems.objects.filter(user=request.user, ordered=False,).first()
-    now = timezone.now()
+    return render(request, 'testing.html', {'searched': searched, 'searching' : searching})
 
-    periodic_time = cartItems.created + timedelta(days=0, hours=0, minutes= 1 , seconds=0)
-    print(type(now))
-    print(type(periodic_time))
-    if now > periodic_time:
-        messages.error(request, _('* Your Cart has been expired'), extra_tags='danger')
-        return redirect('cart_and_orders:deleting',cartItemID)
+    # now = timezone.now()
+    # cartItemschecking = CartItems.objects.filter(user=request.user, ordered=False,).last()
 
-    else:
-        print("An has not been Passed yet")
-    return render(request, 'testing.html')
+    # periodic_time = cartItemschecking.created + timedelta(days=0, hours=0, minutes= 0 , seconds=30)
+
+    # print(cartItemschecking)
+    # if now > periodic_time:
+    #     messages.error(request, _('* Your Cart has been expired'), extra_tags='danger')
+    #     deleteing = CartItems.objects.filter(user=request.user, ordered=False,).delete()
+    #     if deleteing:
+    #         Codes.objects.filter(
+    #             user=request.user, addToCart=True, ordered=False).update(user = None, addToCart = False)
+    #         Cart.objects.filter(user=request.user).update(total_price = 0)
+    #     print("DELETED")
+
+    # else:
+    #     pass
+    #     print("An has not been Passed yet")
 
 
 def EasyKashPayment(request):
@@ -324,17 +349,19 @@ def EasyKashPayment(request):
 
 
 def deleting(request, id):
-    cartItemID = request.session.get('cartItemID')
-    print(cartItemID)
     if request.user.is_authenticated:
         cart = Cart.objects.get(user=request.user)
-        cartItem = CartItems.objects.get(user=request.user, ordered=False,id=id)
-        deleteing = CartItems.objects.filter(user=request.user, ordered=False,id=id or cartItemID).delete()
+        cartItem = CartItems.objects.get(
+            user=request.user, ordered=False, id=id)
+        deleteing = CartItems.objects.filter(
+            user=request.user, ordered=False, id=id).delete()
         if deleteing:
-            new_total_after_deleting = cart.total_price - (cartItem.price * cartItem.quantity)
+            new_total_after_deleting = cart.total_price - \
+                (cartItem.price * cartItem.quantity)
             Codes.objects.filter(
-                user=request.user, addToCart=True, ordered=False).update(user = None, addToCart = False)
-            Cart.objects.filter(user=request.user).update(total_price = new_total_after_deleting)
+                user=request.user, addToCart=True, ordered=False).update(user=None, addToCart=False)
+            Cart.objects.filter(user=request.user).update(
+                total_price=new_total_after_deleting)
         print(new_total_after_deleting)
         return redirect('cart_and_orders:cart')
     return render(request, 'deleting.html')

@@ -21,8 +21,12 @@
     <link  rel="stylesheet"   href="{% static "css/youzify.min.css" %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
 
 </head>
+
+
 
 <body class="page-home dark-theme">
   
@@ -49,7 +53,6 @@
             <div class="page-header__inner">
                 
                 <div class="page-header__sidebar">
-                    
                     <div class="page-header__menu-btn"><button class="menu-btn ico_menu is-active"></button></div>
                     
                     <div class="page-header__logo"> <a href="{% url 'categories_and_products:index' %}"><img src="{% static "img/breakers_logo.png" %}" alt="logo"></a>
@@ -57,10 +60,34 @@
                     </div>
                     
                 </div>
-          
+
+    
+                <div class="page-header__content">
+                    <div class="page-header__search">
+                        <br>
+                        <form method="GET" action="{% url 'categories_and_products:searchedPage' %}" class="w-100">
+                        <div class="search">
+                                {% csrf_token %}
+                                
+                            <div class="search__input"><input class="search" name="searched" placeholder="Search" ></div>
+                            
+                            <div class="search__btn">
+                                <button type="submit"><i class="ico_search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                  
+                </div>
+             
+                
+               
             </div>
+            
         </header>
+        
         <div class="page-content">
+            
             <aside class="sidebar is-show" id="sidebar">
                 <div class="sidebar-box">
                     <ul class="uk-nav">

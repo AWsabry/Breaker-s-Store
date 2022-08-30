@@ -365,7 +365,7 @@ a:hover {
 
 
 .game-card__title {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .widjet .uk-range {
@@ -384,7 +384,7 @@ a:hover {
 
 
 html #youzify-groups-list .item .item-title a {
-    font-family: 'Marcellus', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     color: #222;
     font-weight: 500;
@@ -883,6 +883,8 @@ a:hover {
     padding: 0 20px;
     border-radius: 5px;
     background: #F5F5F5;
+    line-height:40px;
+
 }
 
 .search__input [class*='ico_'] {
@@ -907,7 +909,7 @@ a:hover {
     font-size: 14px;
     font-style: normal;
     font-weight: normal;
-    line-height: 1.43;
+    line-height: 20.43;
 }
 
 .search__input input::-moz-placeholder {
@@ -1029,7 +1031,7 @@ a:hover {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 60px;
-    width: 180px;
+    width: 100px;
     padding: 0 20px;
     border: 1px solid #F5F5F5;
     border-radius: 15px;
@@ -5227,7 +5229,7 @@ body.dark-theme #modal-help ul li {
 }
 
 .sidebar-box .uk-nav li a {
-    font-family: 'IBM Plex Sans', serif;
+    font-family: 'Inter', serif;
     font-size: 13px;
     font-weight: 400;
 }
@@ -5242,7 +5244,7 @@ body.dark-theme #modal-help ul li {
 }
 
 .uk-text-lead {
-    font-family: 'IBM Plex Sans', serif;
+    font-family: 'Inter', serif;
     font-size: 26px;
     color: #1f1f1f;
     margin-bottom: 17px;
@@ -5260,14 +5262,14 @@ body.dark-theme #modal-help ul li {
     color: #1f1f1f;
     display: block;
     margin-bottom: 10px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
 
 
 
 .my-game-item__title {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     padding-top: 14px;
     font-size: 17px;
@@ -5972,3 +5974,19 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
     justify-content: space-between;
     
 }
+
+.myform {
+    text-align: center;
+    padding: 5px;
+    border: 1px dotted #ccc;
+    margin: 2%;
+}
+.qty {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+}
+input.qtyplus { width:25px; height:25px;}
+input.qtyminus { width:25px; height:25px;}
+
+

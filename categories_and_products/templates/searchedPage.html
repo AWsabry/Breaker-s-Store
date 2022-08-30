@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+            <main class="page-main">
+                <div class="uk-grid" data-uk-grid>
+                    <div class="uk-width-3-3@l">
+                        <div class="widjet --filters">
+                            <br><br><br>
+                            <div class="widjet__head">
+                                
+                                <h3 class="uk-text-lead">Your Search Result on " {{searched}}" </h3>
+                            </div>
+                
+                        </div>
+                        <div class="group-row">
+
+                            {% for searching in searching %}
+                            <ul id="youzify-groups-list" class="item-list">
+                                <li class="group-has-avatar youzify-show-cover">
+                                    <div class="youzify-group-data">
+                                        <div class="youzify-cover-content">  <a href="{{searching.get_absolute_url}}"><img alt="group" src="{{searching.image.url}}"></a></div>
+                                       <br><br><br>
+                                        <div class="item">
+                                            <div class="item-title"><a href="{{searching.get_absolute_url}}" class="bp-group-home-link season-of-the-witch-home-link">{{searching.codeCategory}}</a></div>
+                                            <div class="item-meta">
+                                                <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
+                                            </div>
+                                            <div class="game-card__genre">{{searching.description}}</div>
+                                            <div class="game-card__price"><span>{{searching.price}} EGP </span></div>
+
+                                        </div>
+                                        <div class="game-card__users">
+                                            
+                                        </div>
+                                    
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                            {% empty %}
+                            <center> <h3 class="uk-text-lead">No Results for "{{searched}}"</h3></center>
+                            {% endfor %}
+              
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock content %}
+
+
+
+{% comment %} 
+<div class="uk-grid" data-uk-grid>
+    <div class="uk-width-2-3@l">
+    <br><br>
+    {% if searched %}
+    <div class="logo-big">
+        <span> <center> <h1>you searched for {{searched}}  </h1></span></center>
+        <br/>
+        {% for searching in searching %}
+        <span> <center> <h1>you searched for {{searching.codeCategory}}  </h1></span></center>
+
+        {% empty %}
+        <span> <center> <h1>No Results for {{searched}} </h1></span></center>
+        <br/>
+        {% endfor %}
+    </div>
+        <h3 class="uk-text-lead"> </h3>
+        {% else %}
+        <div class="logo-big">
+            <span> <center> <h1>You Forget to Search </h1></span></center>
+
+        </div>
+        {% endif %}
+    </div> 
+    
+    
+   
+    </div> 
+    
+</div>
+
+
+
+
+
+
+
+ {% endcomment %}

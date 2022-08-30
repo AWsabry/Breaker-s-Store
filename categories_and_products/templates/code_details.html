@@ -68,15 +68,24 @@
                 </ul>
                 
                 {% endif %}
+
+                {% if all_codes_in_category == 0 %}
+
+                <center> <h3 style="color:#c00000" class="uk-text-lead">Out Of Stock !</h3></center>
+
+                {% else %}
                 <div class="uk-margin">
-                    <form method = "POST">
+                     <form method = "POST">
                         {% csrf_token %}
-                    QTY: <input class="uk-input-qty"  min="1" max="10"  name="Quantity" id="Quantity" onkeypress="return /[0-9]/i.test(event.key)" value = "1" placeholder="Quantity" required>
+                        <h5 class="uk-text-lead">Quantity : </h5>
+                        <center> <input class="uk-input-qty" type = "number" min="1" max="10"  name="Quantity" id="Quantity" value = "1" placeholder="Quantity" required></center>
                 </div> 
+                
             </div>
             <div class="game-profile-price">
                 <div class="game-profile-price__value">{{codeCategories.price}} EGP </div><a> <button class="uk-button uk-button-danger uk-width-1-1" type="submit"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
-            </div>            
+            </div>  
+            {% endif %}          
             {% endfor %}
         </div>
     </div>

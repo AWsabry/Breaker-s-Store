@@ -11,6 +11,7 @@ urlpatterns = [
     path('games',views.games,name='games'),
     path('store',views.store,name='store'),
     path('details/<slug:categoryslug>/',views.code_details,name='code_details'),
+    path('searchedPage',views.searchedPage,name='searchedPage'),
     path('<slug:Gameslug>/',views.GamesCodes,name='GamesCodes'),
     path('filter',views.filtering_test,name='filter'),
 

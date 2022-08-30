@@ -1,4 +1,5 @@
 from email import message
+from multiprocessing import context
 from traceback import print_tb
 from unicodedata import category
 from django.shortcuts import redirect, render
@@ -61,7 +62,16 @@ def GamesCodes(request, Gameslug):
     return render(request, "GamesCodes.html", context)
 
 
-
+def searchedPage(request):
+    searched = request.GET.get('searched')
+    print(searched)
+    searching = Code_Categories.objects.all() if not searched else Code_Categories.objects.filter(codeCategory__contains=searched)
+    print(searching)
+    context = {
+        'searched' : searched,
+        'searching' : searching,
+    }
+    return render(request, 'searchedPage.html', context)
 
 
 def code_details(request, categoryslug):
@@ -76,11 +86,6 @@ def code_details(request, categoryslug):
     codeCategory = Code_Categories.objects.get(
         categoryslug=categoryslug, active=True,)
 
-    # code = Codes.objects.filter(active = True , category__categoryslug = categoryslug ).order_by('?')[:Quantity]
-    # print(code)
-
-
-    
     all_codes_in_category = Codes.objects.filter(codeCategory__categoryslug = categoryslug,addToCart = False).all().count()
     if request.method == "POST" and quantityForm.is_valid():
         if request.user.is_authenticated:
@@ -152,11 +157,14 @@ def code_details(request, categoryslug):
                            extra_tags='danger')
             return redirect('Register_Login:login')
 
+
     context = {
         'categories': Games,
         'codeCategories': codeCategories,
-        'form': quantityForm
+        'form': quantityForm,
+        'all_codes_in_category' : all_codes_in_category
     }
+    print(all_codes_in_category)
     return render(request, "code_details.html", context)
 
 

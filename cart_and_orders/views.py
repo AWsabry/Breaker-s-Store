@@ -51,6 +51,10 @@ def yourorders(request):
 def order_confirm(request):
     cart = Cart.objects.get(user=request.user)
     response = request.session.get('refrence')
+    if cart.total_price == 0 and CartItems.objects.filter(user=request.user, ordered=True, paid=True) and Codes.objects.filter(user=request.user, addToCart=True, ordered=True, paid=True, active=False):
+        pass
+    else:
+        return redirect('cart_and_orders:cart')
 
     # Creating Order ID
     order_sent = Order.objects.create(

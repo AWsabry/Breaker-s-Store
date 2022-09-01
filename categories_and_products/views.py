@@ -61,6 +61,7 @@ def searchedPage(request):
     context = {
         'searched' : searched,
         'searching' : searching,
+     
     }
     return render(request, 'searchedPage.html', context)
 

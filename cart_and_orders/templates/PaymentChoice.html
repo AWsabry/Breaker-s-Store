@@ -4,6 +4,7 @@
 {% block content %}
 
 
+
             <main class="page-main">
                 <div class="uk-grid" data-uk-grid>
                     <div class="uk-width-3-3@l">
@@ -27,6 +28,31 @@
                                        <br>
                                         <div class="item">
                                             <center><div class="item-title"><a href="{% url 'cart_and_orders:CardsPayment' %}" class="bp-group-home-link season-of-the-witch-home-link">Bank Cards</a></div></center>
+                                            <div class="item-meta">
+                                                <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
+                                            </div>
+                                            <center> <div class="game-card__price"><span>Taxes Fees : 2.1 % + 2 EGP </span></div></center>
+
+                                        </div>
+                                    
+                                        <div class="action">
+                                            <div class="group-button public generic-button"> <a href="{% url 'cart_and_orders:CardsPayment' %}" class="group-button leave-group"><i class="ico_arrow-circle-right-white"></i> Proceed to Payment </a> </div>
+                                            
+                                        </div>
+
+                                    </div>
+                                    
+                                </li>
+
+
+                                <li class="group-has-avatar youzify-show-cover">
+
+                                   
+                                    <div>
+                                        <div> <a href="{% url 'cart_and_orders:CardsPayment' %}"> <img src="{% static "img/payment methods/meeza.png" %}" width="400px" height="320px" /> </a></div>
+                                       <br>
+                                        <div class="item">
+                                            <center><div class="item-title"><a href="{% url 'cart_and_orders:CardsPayment' %}" class="bp-group-home-link season-of-the-witch-home-link">Meeza Cards</a></div></center>
                                             <div class="item-meta">
                                                 <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
                                             </div>
@@ -90,7 +116,7 @@
                                     
                                 </li>
                                
-                                <li class="group-has-avatar youzify-show-cover">
+                                {% comment %} <li class="group-has-avatar youzify-show-cover">
 
                                    
                                     <div>
@@ -112,7 +138,7 @@
 
                                     </div>
                                     
-                                </li>
+                                </li> {% endcomment %}
                             
                                 
 

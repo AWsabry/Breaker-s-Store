@@ -41,6 +41,7 @@
                             </ul>
                             {% empty %}
                             <center> <h3 class="uk-text-lead">No Results for "{{searched}}"</h3></center>
+                            
                             {% endfor %}
               
                         </div>
@@ -53,44 +54,3 @@
         </div>
     </div>
 {% endblock content %}
-
-
-
-{% comment %} 
-<div class="uk-grid" data-uk-grid>
-    <div class="uk-width-2-3@l">
-    <br><br>
-    {% if searched %}
-    <div class="logo-big">
-        <span> <center> <h1>you searched for {{searched}}  </h1></span></center>
-        <br/>
-        {% for searching in searching %}
-        <span> <center> <h1>you searched for {{searching.codeCategory}}  </h1></span></center>
-
-        {% empty %}
-        <span> <center> <h1>No Results for {{searched}} </h1></span></center>
-        <br/>
-        {% endfor %}
-    </div>
-        <h3 class="uk-text-lead"> </h3>
-        {% else %}
-        <div class="logo-big">
-            <span> <center> <h1>You Forget to Search </h1></span></center>
-
-        </div>
-        {% endif %}
-    </div> 
-    
-    
-   
-    </div> 
-    
-</div>
-
-
-
-
-
-
-
- {% endcomment %}

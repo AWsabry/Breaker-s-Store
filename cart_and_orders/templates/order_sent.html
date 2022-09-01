@@ -182,6 +182,9 @@
         {% for order_codes in order_codes %}
         <pre class="tab"> <span style="font-size:24px;color:#ffffff;">- Game: <strong>{{order_codes.codeCategory.game.gameName}}</strong><br>- Category: <strong>{{order_codes.codeCategory.codeCategory}}</strong><br><br></span></pre>
 		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 51px;"><span style="font-size:34px;"><strong><span style="font-size:34px;"><span style="color:#c00000;font-size:26px;">Code : {{order_codes.code}} <br><hr><br><br></span></span></strong></span></p>
+		{% empty %}
+		<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 51px;"><span style="font-size:34px;"><strong><span style="font-size:34px;"><span style="color:#c00000;font-size:26px;">We thought that you are a robot, Contact us on our page to check your order ! <br><hr><br><br></span></span></strong></span></p>
+
         {% endfor %} 
     </p>
    
@@ -219,7 +222,7 @@
 <div class="alignment" style="text-align:center;">
 <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="188px">
 <tr>
-<td style="padding:0 15px 0 0px;"><a href="https://www.facebook.com/" target="_blank"><img alt="Facebook" height="32" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a></td>
+<center> <td style="padding:0 15px 0 0px;"><a href="https://www.facebook.com/breakersstoreeg" target="_blank"><img alt="Facebook" height="32" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png" style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a></td></center>
 </tr>
 </table>
 </div>

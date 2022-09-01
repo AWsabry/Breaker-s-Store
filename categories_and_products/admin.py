@@ -1,8 +1,5 @@
 from django.contrib import admin
-from cart_and_orders.admin import CodesAdmin
-from cart_and_orders.models import Codes
-
-from categories_and_products.models import Game, Poster, PromoCode,Code_Categories
+from categories_and_products.models import Game, Poster,Code_Categories
 
 # Register your models here.
 

@@ -1,7 +1,5 @@
 from django.contrib import admin
 from cart_and_orders.models import Cart, CartItems, Codes, Order
-from django.conf import settings
-
 
 
 class CartItemsAdmin(admin.TabularInline):
@@ -55,6 +53,7 @@ class OrderAdmin(admin.ModelAdmin):
     ]
     list_filter = ['paid',
                    'ordered_date',
+                   'user'
                    ]
     search_fields = ['user__email']
 
@@ -89,5 +88,5 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Codes,CodeAdmin)
 
 
-admin.site.register(CartItems,CartItemssAdmin)
+# admin.site.register(CartItems,CartItemssAdmin)
 # admin.site.register(BromoCode, BromoCodeAdmin)

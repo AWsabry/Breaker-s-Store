@@ -1,14 +1,10 @@
-import datetime
-from operator import mod
-from urllib import request
 from django.db import models
 from django.conf import settings
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from categories_and_products.models import Code_Categories
-from django.db.models import Sum
 from django.utils import timezone
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.urls import reverse
 

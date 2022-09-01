@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'Register_Login',
     'categories_and_products',
     'cart_and_orders',
@@ -42,9 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-
     
-    'rest_framework',
 ]
 
 MIDDLEWARE = [

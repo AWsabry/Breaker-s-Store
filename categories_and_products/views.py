@@ -1,18 +1,9 @@
-from email import message
-from multiprocessing import context
-from traceback import print_tb
-from unicodedata import category
 from django.shortcuts import redirect, render
-from Register_Login.models import Profile
-from cart_and_orders.models import Cart, CartItems, Codes, Order
+from cart_and_orders.models import Cart, CartItems, Codes
 from categories_and_products.forms import QuantityForm
 from categories_and_products.models import Code_Categories, Game, Poster
-from django.core.paginator import Paginator
 from django.contrib import messages
 from django.utils.translation import gettext as _
-
-import datetime
-
 
 def index(request):
     poster = Poster.objects.filter(active=True)

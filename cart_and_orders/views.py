@@ -1,11 +1,6 @@
-from ast import GtE
 from datetime import datetime, timedelta
-from email import message
 from django.utils import timezone
-from http.client import HTTPResponse
-from http.server import HTTPServer
-from xmlrpc.client import DateTime
-from django.shortcuts import redirect, render, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -53,7 +48,7 @@ def yourorders(request):
     return render(request, 'yourorders.html', context)
 
 
-def order_confirmation(request):
+def order_confirm(request):
     cart = Cart.objects.get(user=request.user)
     response = request.session.get('refrence')
 
@@ -104,16 +99,8 @@ def order_confirmation(request):
     return render(request, "order_confirmation.html")
 
 
-def ThankYou(request):
-    return render(request, 'thankyou.html')
-
-
 def email_template(request):
     return render(request, 'email_template.html')
-
-
-def payment(request):
-    return render(request, 'payment.html')
 
 
 def order_sent(request):
@@ -128,12 +115,12 @@ def order_sent(request):
 
 
 def cart(request):
-    now = timezone.now()
-    cartItemschecking = CartItems.objects.filter(
-        user=request.user, ordered=False,).last()
-    print(cartItemschecking)
-
     if request.user.is_authenticated:
+        now = timezone.now()
+        cartItemschecking = CartItems.objects.filter(
+            user=request.user, ordered=False,).last()
+        print(cartItemschecking)
+
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
         cart = Cart.objects.filter(user=request.user)
         gettingcart = Cart.objects.get(user=request.user,)
@@ -141,7 +128,7 @@ def cart(request):
             2 + (0.02 * gettingcart.total_price)
         if cartItemschecking != None:
             periodic_time = cartItemschecking.created + \
-                timedelta(days=0, hours=0, minutes=0, seconds=30)
+                timedelta(days=0, hours=0, minutes=15, seconds=0)
             if now > periodic_time:
                 messages.error(request, _(
                     '* Your Cart has been expired'), extra_tags='danger')
@@ -206,9 +193,10 @@ def CardsPayment(request):
 
 # Sending Payment via API
 
-        sending_payment_request = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
-            'MerchantId': '281822021543671',
-            'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
+        sending_payment_request = requests.post('https://api.opaycheckout.com/api/v1/international/cashier/create', headers={
+            'MerchantId': '281822021682889',
+            'Authorization': 'Bearer OPAYPUB16450080851810.3897884686987133',
+
         },
             json={
             "country": "EG",
@@ -218,7 +206,7 @@ def CardsPayment(request):
                 "currency": "EGP"
             },
             # Payment success page after payment
-            "returnUrl": "http://127.0.0.1:8000/order_confirmation",
+            "returnUrl": "http://127.0.0.1:8000/order_confirm",
             "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
             "callbackUrl": "https://your-call-back-url",
             "expireAt": 300,
@@ -271,6 +259,7 @@ def WalletPayment(request):
         sending_payment_request = requests.post('https://api.opaycheckout.com/api/v1/international/cashier/create', headers={
             'MerchantId': '281822021682889',
             'Authorization': 'Bearer OPAYPUB16450080851810.3897884686987133',
+
         },
             json={
             "country": "EG",
@@ -280,9 +269,9 @@ def WalletPayment(request):
                 "currency": "EGP"
             },
             # Payment success page after payment
-            "returnUrl": "http://127.0.0.1:8000",
+            "returnUrl": "http://127.0.0.1:8000/order_confirm",
             "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
-            "callbackUrl": "http://127.0.0.1:8000/order_confirmation",
+            "callbackUrl": "https://your-call-back-url",
             "expireAt": 300,
             "userInfo": {
                 "userEmail": str(request.user),
@@ -299,7 +288,7 @@ def WalletPayment(request):
                     "quantity": 2,
                 }
             ],
-            "payMethod": "ReferenceCode"
+            "payMethod": "MWALLET"
         })
 
         print("URL", sending_payment_request.json())
@@ -317,35 +306,6 @@ def WalletPayment(request):
 
 def PaymentFailed(request):
     return render(request, 'PaymentFailed.html')
-
-
-def testing(request):
- 
-
-    return render(request, 'testing.html', {'searched': searched, 'searching' : searching})
-
-    # now = timezone.now()
-    # cartItemschecking = CartItems.objects.filter(user=request.user, ordered=False,).last()
-
-    # periodic_time = cartItemschecking.created + timedelta(days=0, hours=0, minutes= 0 , seconds=30)
-
-    # print(cartItemschecking)
-    # if now > periodic_time:
-    #     messages.error(request, _('* Your Cart has been expired'), extra_tags='danger')
-    #     deleteing = CartItems.objects.filter(user=request.user, ordered=False,).delete()
-    #     if deleteing:
-    #         Codes.objects.filter(
-    #             user=request.user, addToCart=True, ordered=False).update(user = None, addToCart = False)
-    #         Cart.objects.filter(user=request.user).update(total_price = 0)
-    #     print("DELETED")
-
-    # else:
-    #     pass
-    #     print("An has not been Passed yet")
-
-
-def EasyKashPayment(request):
-    return render(request, 'EasyKashPayment.html')
 
 
 def deleting(request, id):

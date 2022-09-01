@@ -11,14 +11,6 @@
                     <div class="uk-width-2-3@l">
                     <br><br>
                         <h3 class="uk-text-lead">Your Orders</h3>
-
-                        {% if CartItems.is_empty %}
-                        <div class="logo-big">
-                            <span> <center> <h1>Your Cart is Empty</h2></span></center>
-
-                        </div>
-                        {% else %}
-
                         
                         {% for codes in codes %} <br><br>
                         <div class="game-card --horizontal favourites-game">
@@ -43,9 +35,11 @@
                             <hr>
                     
                         </div>
+
+                        {% empty %}
+                        <center> <h3 class="uk-text-lead">" You didn't have any order yet "</h3></center>
        
                         {% endfor %}
-                        {% endif %}
                     </div> 
                     
                     

@@ -16,6 +16,8 @@ urlpatterns = [
     path('PaymentChoice', views.PaymentChoice, name='PaymentChoice'),
     path('CardsPayment', views.CardsPayment, name='CardsPayment'),
     path('WalletPayment', views.WalletPayment, name='WalletPayment'),
+    path('RefrenceCode', views.RefrenceCode, name='RefrenceCode'),
+
 
     path('PaymentFailed', views.PaymentFailed, name='PaymentFailed'),
     

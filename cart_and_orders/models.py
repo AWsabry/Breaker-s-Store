@@ -1,3 +1,4 @@
+from urllib import request
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
@@ -5,11 +6,17 @@ from django.dispatch import receiver
 from categories_and_products.models import Code_Categories
 from django.utils import timezone
 from datetime import timedelta
-
+from django.contrib import messages
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 # Create your models here.
+
+status = (
+    ('Pending', 'Pending'),
+    ('Success', 'Success'),
+)
 
 
 class Cart(models.Model):
@@ -21,9 +28,10 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.user)
 
-    def calculatingTotal(request,self):
-        cartItem  = CartItems.objects.filter(user = request.user,ordered = False, paid = False)
-        print(cartItem.price) 
+    def calculatingTotal(request, self):
+        cartItem = CartItems.objects.filter(
+            user=request.user, ordered=False, paid=False)
+        print(cartItem.price)
         return
 
 
@@ -77,12 +85,14 @@ class Codes(models.Model):
     total_profit_calculated_from_sales = models.FloatField(
         default=0, verbose_name='Profit From Orders')
     price = models.FloatField(default=0, verbose_name='Price Of This Code')
-
-    def __str__(self):
-        return self.code
+    status = models.CharField(
+        max_length=50, choices=status, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Codes"
+
+    def __str__(self):
+        return self.code
 
 
 @receiver(pre_save, sender=Codes)
@@ -106,9 +116,8 @@ class CartItems(models.Model):
     quantity = models.IntegerField(default=1, name='quantity')
     created = models.DateTimeField(auto_now_add=True)
     totalOrderItemPrice = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return str(self.user.email) + " " + str(self.codeCategory.codeCategory)
+    status = models.CharField(
+        max_length=50, choices=status, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "CartItems"
@@ -116,8 +125,16 @@ class CartItems(models.Model):
     def deleteing_item(self):
         return reverse('cart_and_orders:deleting', args=[self.id])
 
+    def __str__(self):
+        return str(self.user.email) + " " + str(self.codeCategory.codeCategory)
 
 
+        
+    # def save(self, *args, **kwargs):
+        # if settings.SESSION_EXPIRE_SECONDS > 10:
+        #   print("Hello")
+        # else:
+        #     print("NOT")
 
 @receiver(pre_save, sender=CartItems)
 def correct_price(sender, **kwargs):
@@ -128,7 +145,10 @@ def correct_price(sender, **kwargs):
         float(price_of_codeCategory.price)
     total_cart_items = CartItems.objects.filter(user=cart_items.user)
 
-def get_label(sender,self, **kwargs):
+
+
+
+def get_label(sender, self, **kwargs):
     cart_items = kwargs['instance']
     now = timezone.now()
     periodic_time = cart_items.created + timedelta(days=0, hours=0, seconds=10)

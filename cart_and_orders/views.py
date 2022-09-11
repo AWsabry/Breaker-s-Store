@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
+from cart_and_orders.emptying_cart import deleting_from_cart, reset_all_users_cartItems_and_release_codes
 from cart_and_orders.models import Cart, CartItems, Codes, Order
 from django.db.models import Sum
 import requests
@@ -31,6 +32,7 @@ def send_code_email(request, order_codes):
 
 
 def yourorders(request):
+    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         user_codes = Codes.objects.filter(
             user=request.user, addToCart=True, ordered=True).order_by('-created')
@@ -51,10 +53,10 @@ def yourorders(request):
 def order_confirm(request):
     cart = Cart.objects.get(user=request.user)
     response = request.session.get('refrence')
-    if cart.total_price == 0 and CartItems.objects.filter(user=request.user, ordered=True, paid=True) and Codes.objects.filter(user=request.user, addToCart=True, ordered=True, paid=True, active=False):
-        pass
-    else:
+    if CartItems.objects.filter(user=request.user, ordered=False, paid=False).exists():
         return redirect('cart_and_orders:cart')
+    else:
+        pass
 
     # Creating Order ID
     order_sent = Order.objects.create(
@@ -69,13 +71,14 @@ def order_confirm(request):
     print(response)
 # Updating Code Data
     Codes.objects.filter(user=request.user, addToCart=True, ordered=False, active=True).update(
-        order_id=order_sent.id, ordered=True, active=False,)
+        order_id=order_sent.id, ordered=True, active=False,  status='Success',)
 
 # Updating the cartItem with the order id that's ordered
     CartItems.objects.filter(user=request.user, ordered=False).update(
         ordered=True,
         orderId=order_sent.id,
         paid=True,
+        status='Success'
     )
 
     # Updating the profit sum
@@ -108,6 +111,7 @@ def email_template(request):
 
 
 def order_sent(request):
+    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         order_codes = Codes.objects.filter(
             user=request.user, addToCart=True, ordered=False)
@@ -117,42 +121,55 @@ def order_sent(request):
         return redirect('Register_Login:login')
     return render(request, 'order_sent.html', {'order_codes': order_codes})
 
+    
+
 
 def cart(request):
+    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         now = timezone.now()
         cartItemschecking = CartItems.objects.filter(
             user=request.user, ordered=False,).last()
-        print(cartItemschecking)
 
         cartItems = CartItems.objects.filter(user=request.user, ordered=False)
         cart = Cart.objects.filter(user=request.user)
+
         gettingcart = Cart.objects.get(user=request.user,)
+
         total_price_after_taxes = gettingcart.total_price + \
             2 + (0.02 * gettingcart.total_price)
+
         if cartItemschecking != None:
+
             periodic_time = cartItemschecking.created + \
-                timedelta(days=0, hours=0, minutes=15, seconds=0)
-            if now > periodic_time:
-                messages.error(request, _(
-                    '* Your Cart has been expired'), extra_tags='danger')
-                deleteing = CartItems.objects.filter(
-                    user=request.user, ordered=False,).delete()
-                if deleteing:
-                    Codes.objects.filter(
-                        user=request.user, addToCart=True, ordered=False).update(user=None, addToCart=False)
-                    Cart.objects.filter(
-                        user=request.user).update(total_price=0)
-                print("DELETED")
-            else:
+                timedelta(days=0, hours=0, minutes=0, seconds=30)
+
+            pendingTime = cartItemschecking.created + \
+                timedelta(days=0, hours=3, minutes=0, seconds=0)
+
+            if cartItemschecking.status == "Pending":
+                if now > pendingTime:
+                    messages.error(request, _(
+                        '* Your Pending limit has been expiered'), extra_tags='danger')
+                    deleting_from_cart(request)
+
+            elif cartItemschecking.status == "Success":
                 pass
+
+            else:
+                if now > periodic_time:
+                    messages.error(request, _(
+                        '* Your Cart has been expired'), extra_tags='danger')
+                    deleting_from_cart(request)
+
         else:
             pass
-        print("An has not been Passed yet")
+        print("Your Cart is Empty")
 
         if request.method == 'POST':
             if cartItems.exists():
                 print("exist")
+                pass
             else:
                 messages.error(request, _('* Your Cart is Empty, Please add to cart first'),
                                extra_tags='danger')
@@ -162,7 +179,9 @@ def cart(request):
             'cart': cart,
             'total_price_after_taxes': total_price_after_taxes
         }
+
     else:
+        reset_all_users_cartItems_and_release_codes(request)
         messages.error(request, _('* Login First Please'),
                        extra_tags='danger')
         return redirect('Register_Login:login')
@@ -171,6 +190,7 @@ def cart(request):
 
 
 def PaymentChoice(request):
+    reset_all_users_cartItems_and_release_codes(request)
     cartItems = CartItems.objects.filter(user=request.user, ordered=False)
     if cartItems.exists():
         pass
@@ -184,6 +204,14 @@ def PaymentChoice(request):
 
 def CardsPayment(request):
     if request.user.is_authenticated:
+
+        Codes.objects.filter(user=request.user, addToCart=True,
+                             ordered=False, active=True).update(status='Pending',)
+
+        # Updating the cartItem with the order id that's ordered
+        CartItems.objects.filter(user=request.user, ordered=False).update(
+            status='Pending',
+        )
 
         # Getting Refrence ID to link between payment & dashboard & store it in the session
         refrence = str(datetime.now()) + str(request.user.username)
@@ -248,6 +276,14 @@ def CardsPayment(request):
 def WalletPayment(request):
     if request.user.is_authenticated:
 
+        Codes.objects.filter(user=request.user, addToCart=True,
+                             ordered=False, active=True).update(status='Pending',)
+
+        # Updating the cartItem with the order id that's ordered
+        CartItems.objects.filter(user=request.user, ordered=False).update(
+            status='Pending',
+        )
+
         # Getting Refrence ID to link between payment & dashboard & store it in the session
         refrence = str(datetime.now()) + str(request.user.username)
         request.session['refrence'] = refrence
@@ -306,6 +342,76 @@ def WalletPayment(request):
     else:
         messages.error(request, _('* Login First Please'), extra_tags='danger')
     return render(request, 'WalletPayment.html')
+
+
+def RefrenceCode(request):
+    if request.user.is_authenticated:
+
+        # Updating Code Data
+        Codes.objects.filter(user=request.user, addToCart=True,
+                             ordered=False, active=True).update(status='Pending',)
+
+        # Updating the cartItem with the order id that's ordered
+        CartItems.objects.filter(user=request.user, ordered=False).update(
+            status='Pending',
+        )
+
+        # Getting Refrence ID to link between payment & dashboard & store it in the session
+        refrence = str(datetime.now()) + str(request.user.username)
+        request.session['refrence'] = refrence
+
+        # Calculating the Taxes and adding it
+        gettingcart = Cart.objects.get(user=request.user,)
+        total_price_after_taxes = gettingcart.total_price + \
+            2 + (0.021 * gettingcart.total_price)
+
+        # Sending Payment via API
+        sending_payment_request = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
+            'MerchantId': '281822021543671',
+            'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
+
+        },
+            json={
+            "country": "EG",
+            "reference": refrence,
+            "amount": {
+                "total": (total_price_after_taxes * 100),
+                "currency": "EGP"
+            },
+            # Payment success page after payment
+            "returnUrl": "http://127.0.0.1:8000/order_confirm",
+            "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
+            "callbackUrl": "https://your-call-back-url",
+            "expireAt": 300,
+            "userInfo": {
+                "userEmail": str(request.user),
+                "userId": str(request.user.id),
+                "userMobile": str(request.user.PhoneNumber),
+                "userName": str(request.user.username),
+            },
+            "productList": [
+                {
+                    "productId": "productId",
+                    "name": "name",
+                    "description": "description",
+                    "price": 100,
+                    "quantity": 2,
+                }
+            ],
+            "payMethod": "ReferenceCode"
+        })
+
+        print("URL", sending_payment_request.json())
+
+# Checking the success code to continue the operation
+        if sending_payment_request.json().get('code') != '00000':
+            return redirect('cart_and_orders:PaymentFailed')
+        else:
+            payment_url = sending_payment_request.json().get('data').get('cashierUrl')
+            return redirect(str(payment_url),)
+    else:
+        messages.error(request, _('* Login First Please'), extra_tags='danger')
+    return render(request, 'RefrenceCode.html')
 
 
 def PaymentFailed(request):

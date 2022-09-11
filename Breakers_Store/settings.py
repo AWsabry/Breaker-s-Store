@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,17 +43,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'Breakers_Store.urls'
@@ -145,7 +147,7 @@ AUTH_USER_MODEL = 'Register_Login.Profile'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_EMAIL_ACTIVATE_EXPIRE = 120 # in seconds
+AUTH_EMAIL_ACTIVATE_EXPIRE = 31104000 # in seconds
 
 
 # SMTP CONFIGURATION
@@ -158,3 +160,10 @@ EMAIL_HOST_PASSWORD = ']gMDw}vcaU(*'
 
 MAXIMUM_SIZE_ALLOWED_PHOTO = 1000 * 312 * 8
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# SESSION_EXPIRE_SECONDS = 6000
+
+# SESSION_TIMEOUT_REDIRECT = reverse_lazy('Register_Login:login')
+
+
+

@@ -22,6 +22,11 @@ class CartAdmin(admin.ModelAdmin):
 
 
     
+    def has_delete_permission(self, request, obj=None):
+        # Disable delete
+        return False
+
+    
     def Cart_Name(self, obj):
         return   str(obj.user.first_name) + " " + str(obj.user.last_name)
       
@@ -79,7 +84,8 @@ class CodeAdmin(admin.ModelAdmin):
 
 
 class CartItemssAdmin(admin.ModelAdmin):
-    list_display = ('id','created')
+    list_display = ('user','ordered', 'status', 'created')
+    list_filter = ('user','ordered', 'status', 'created')
 
 
 
@@ -88,5 +94,5 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Codes,CodeAdmin)
 
 
-# admin.site.register(CartItems,CartItemssAdmin)
+admin.site.register(CartItems,CartItemssAdmin)
 # admin.site.register(BromoCode, BromoCodeAdmin)

@@ -27,6 +27,7 @@ from Register_Login.models import AccessToken, Profile
 
 # Importing Forms
 from Register_Login.forms import CompleteProfile, LoginForm, RegisterForm
+from cart_and_orders.emptying_cart import reset_all_users_cartItems_and_release_codes
 from cart_and_orders.models import Cart, Codes
 
 
@@ -81,6 +82,7 @@ def send_activate_mail(request, user):
 # This function is to create a new user profile & be saved in the models
 @csrf_exempt
 def Register(request):
+    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         return redirect('categories_and_products:index')
     else:
@@ -127,7 +129,8 @@ def Register(request):
 def email_sent(request):
     return render(request, "email_sent.html")
 
-
+def password_reset_emailing(request):
+    return render(request, "registration/password_reset_completing.html")
 # Logout Page
 
 
@@ -152,7 +155,7 @@ def activate_user(request, token):
 
 def logOut(request):
     logout(request)
-    messages.info(request, "You have successfully logged out.")
+    messages.info(request, "Your session has been ended, please login again")
     return render(request, 'LogOut.html',)
 
 
@@ -163,6 +166,7 @@ def email_activated(request):
 
 # Login View
 def signIn(request):
+    reset_all_users_cartItems_and_release_codes(request)
     form = LoginForm(request.POST, request.FILES)
     if request.user.is_authenticated:
         return redirect('categories_and_products:index')
@@ -187,6 +191,7 @@ def signIn(request):
 
 
 def profile(request):
+    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         user_codes = Codes.objects.filter(user=request.user, addToCart=True, ordered=True).order_by('-created')[:5] 
         context = {'user_codes' : user_codes}

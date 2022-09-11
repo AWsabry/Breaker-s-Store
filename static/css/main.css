@@ -25,7 +25,6 @@ body {
 h1,
 h2,
 h3,
-h4,
 h5,
 h6 {
     font-family: "IBM Plex Sans";
@@ -5931,12 +5930,27 @@ html body.dark-theme .chat-user-list__head a.ico_edit {
 
 }
 .messages {
-    color: #ffffff;
+    color: #c00000;
+    font-weight: bold;
 
 }
 .messages.li{
-    color: #ffffff;
+    color: #c00000;
+    font-weight: bold;
 
+
+}
+.h4{
+    color: #c00000;
+    font-weight: bold;
+}
+.uk-text-lead-orders {
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.33;
 }
 
 

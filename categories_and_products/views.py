@@ -1,4 +1,6 @@
 from django.shortcuts import redirect, render
+from Register_Login.models import Profile
+from cart_and_orders.emptying_cart import reset_all_users_cartItems_and_release_codes
 from cart_and_orders.models import Cart, CartItems, Codes
 from categories_and_products.forms import QuantityForm
 from categories_and_products.models import Code_Categories, Game, Poster
@@ -6,6 +8,8 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 def index(request):
+
+    reset_all_users_cartItems_and_release_codes(request)
     poster = Poster.objects.filter(active=True)
     code_categories = Code_Categories.objects.filter(active=True)
     games = Game.objects.filter(active=True,)
@@ -21,6 +25,7 @@ def index(request):
 
 
 def games(request):
+    reset_all_users_cartItems_and_release_codes(request)
     games = Game.objects.filter(active=True,)
     context = {
         'games': games
@@ -29,6 +34,7 @@ def games(request):
 
 
 def store(request):
+    reset_all_users_cartItems_and_release_codes(request)
     code_categories = Code_Categories.objects.filter(
         active=True).order_by('-codeCategory')
     codes = Codes.objects.filter(active = True, addToCart = False, ordered = False , user = None,codeCategory__active = True)
@@ -41,6 +47,7 @@ def store(request):
 
 
 def GamesCodes(request, Gameslug):
+    reset_all_users_cartItems_and_release_codes(request)
     code_categories = Code_Categories.objects.filter(
         active=True, game__Gameslug=Gameslug)
     codes = Codes.objects.all()
@@ -54,19 +61,24 @@ def GamesCodes(request, Gameslug):
 
 
 def searchedPage(request):
+    reset_all_users_cartItems_and_release_codes(request)
     searched = request.GET.get('searched')
-    print(searched)
-    searching = Code_Categories.objects.all() if not searched else Code_Categories.objects.filter(codeCategory__contains=searched)
+    print(type(searched))
+    searching = Code_Categories.objects.all() if not str(searched) else Code_Categories.objects.filter(codeCategory__contains=searched)
+    GamingSearch  = Game.objects.all() if not str(searched) else Game.objects.filter(gameName__contains = searched, active = True)
     print(searching)
+    print(GamingSearch)
     context = {
         'searched' : searched,
         'searching' : searching,
+        'GamingSearch' : GamingSearch,
      
     }
     return render(request, 'searchedPage.html', context)
 
 
 def code_details(request, categoryslug):
+    reset_all_users_cartItems_and_release_codes(request)
     quantityForm = QuantityForm(request.POST)
     Games = Game.objects.filter(active=True)
 

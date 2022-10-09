@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+import json
+import random
 from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
@@ -9,6 +11,8 @@ from cart_and_orders.emptying_cart import deleting_from_cart, reset_all_users_ca
 from cart_and_orders.models import Cart, CartItems, Codes, Order
 from django.db.models import Sum
 import requests
+import hashlib
+
 
 from categories_and_products.models import Code_Categories
 # Create your views here.
@@ -74,8 +78,7 @@ def order_confirm(request):
         order_id=order_sent.id, ordered=True, active=False,  status='Success',)
 
 # Updating the cartItem with the order id that's ordered
-    CartItems.objects.filter(user=request.user, ordered=False).update(
-        ordered=True,
+    CartItems.objects.filter(user=request.user, ordered=True, paid=False,).update(
         orderId=order_sent.id,
         paid=True,
         status='Success'
@@ -121,11 +124,8 @@ def order_sent(request):
         return redirect('Register_Login:login')
     return render(request, 'order_sent.html', {'order_codes': order_codes})
 
-    
-
 
 def cart(request):
-    reset_all_users_cartItems_and_release_codes(request)
     if request.user.is_authenticated:
         now = timezone.now()
         cartItemschecking = CartItems.objects.filter(
@@ -164,7 +164,7 @@ def cart(request):
 
         else:
             pass
-        print("Your Cart is Empty")
+            print("Your Cart is Empty")
 
         if request.method == 'POST':
             if cartItems.exists():
@@ -214,7 +214,7 @@ def CardsPayment(request):
         )
 
         # Getting Refrence ID to link between payment & dashboard & store it in the session
-        refrence = str(datetime.now()) + str(request.user.username)
+        refrence = str(request.user.id)+str(request.user.username)
         request.session['refrence'] = refrence
 
 # Calculating the Taxes and adding it
@@ -225,10 +225,9 @@ def CardsPayment(request):
 
 # Sending Payment via API
 
-        sending_payment_request = requests.post('https://api.opaycheckout.com/api/v1/international/cashier/create', headers={
-            'MerchantId': '281822021682889',
-            'Authorization': 'Bearer OPAYPUB16450080851810.3897884686987133',
-
+        sending_payment_request = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
+            'MerchantId': '281822021543671',
+            'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
         },
             json={
             "country": "EG",
@@ -240,7 +239,7 @@ def CardsPayment(request):
             # Payment success page after payment
             "returnUrl": "http://127.0.0.1:8000/order_confirm",
             "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
-            "callbackUrl": "https://your-call-back-url",
+            "callbackUrl": "http://127.0.0.1:8000/callbackurl",
             "expireAt": 300,
             "userInfo": {
                 "userEmail": str(request.user),
@@ -266,7 +265,12 @@ def CardsPayment(request):
         if sending_payment_request.json().get('code') != '00000':
             return redirect('cart_and_orders:PaymentFailed')
         else:
+            amount = sending_payment_request.json().get('data').get('amount').get('total')
+            request.session['amount'] = amount
             payment_url = sending_payment_request.json().get('data').get('cashierUrl')
+            CartItems.objects.filter(user=request.user, ordered=False).update(
+                ordered=True,
+            )
             return redirect(str(payment_url),)
     else:
         messages.error(request, _('* Login First Please'), extra_tags='danger')
@@ -381,8 +385,8 @@ def RefrenceCode(request):
             # Payment success page after payment
             "returnUrl": "http://127.0.0.1:8000/order_confirm",
             "cancelUrl": "http://127.0.0.1:8000/PaymentFailed",  # Payment Failed
-            "callbackUrl": "https://your-call-back-url",
-            "expireAt": 300,
+            "callbackUrl": "http://127.0.0.1:8000/callbackurl",
+            "expireAt": 11000,
             "userInfo": {
                 "userEmail": str(request.user),
                 "userId": str(request.user.id),
@@ -408,6 +412,11 @@ def RefrenceCode(request):
             return redirect('cart_and_orders:PaymentFailed')
         else:
             payment_url = sending_payment_request.json().get('data').get('cashierUrl')
+            amount = sending_payment_request.json().get('data').get('amount').get('total')
+            orderNo = sending_payment_request.json().get('data').get('orderNo')
+            request.session['amount'] = amount
+            request.session['orderNo'] = orderNo
+
             return redirect(str(payment_url),)
     else:
         messages.error(request, _('* Login First Please'), extra_tags='danger')
@@ -415,6 +424,7 @@ def RefrenceCode(request):
 
 
 def PaymentFailed(request):
+    reset_all_users_cartItems_and_release_codes(request)
     return render(request, 'PaymentFailed.html')
 
 
@@ -435,3 +445,153 @@ def deleting(request, id):
         print(new_total_after_deleting)
         return redirect('cart_and_orders:cart')
     return render(request, 'deleting.html')
+
+
+def callbackurl(request):
+    print("Entered")
+
+    refrence = request.session.get('refrence')
+    amount = request.session.get('amount')
+    orderNo = request.session.get('orderNo')
+
+    gettingcart = Cart.objects.get(user=request.user,)
+    total_price_after_taxes = gettingcart.total_price + \
+        2 + (0.021 * gettingcart.total_price)
+    print(refrence)
+    print(amount)
+    print(orderNo)
+    # 2022-09-15 14:14:10.055895AWsabry
+
+    callbackurldata = requests.post('https://sandboxapi.opaycheckout.com/api/v1/international/cashier/create', headers={
+        'MerchantId': '281822021543671',
+        'Authorization': 'Bearer OPAYPUB16449210671400.9789067134362516',
+    },
+        json={
+        "payload": {
+            "amount": "178.88",
+            "channel": "Web",
+            "country": "EG",
+            "currency": "EGP",
+            "displayedFailure": "",
+            "fee": "1500",
+            "feeCurrency": "EGP",
+            "instrumentType": "ReferenceCode",
+            "reference": "220907148186760200320",
+            "refunded": False,
+            "status": "SUCCESS",
+            "timestamp": "2021-12-15T11:46:26Z",
+            "token": str(orderNo),
+            "transactionId": str(orderNo),
+            "updated_at": "2021-12-15T11:46:26Z"
+        },
+            "sha512": "f39a090d9c30f4943a150caa96a45a34ac0c9e36b16a9ea9fc2714e8f3ea4c6be93145e874f6a34a916e1c434e706ae139c4b5575ce6ae624da0921f1122c5b9",
+            "type": "transaction-status"
+
+    })
+
+    print("URL", callbackurldata.json())
+    return render(request, 'callbackurl.html', {'callbackurldata': callbackurldata.json()})
+
+
+def fawrypay(request):
+
+    URL = "https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/charge"
+
+    # Payment Data
+    merchantCode = '+/IAAY2notgBlM+CrNuRkw=='
+    merchantRefNum = '23124654641'
+    merchant_cust_prof_id = '777777'
+    payment_method = 'PAYATFAWRY'
+    amount = '580.55'
+    merchant_sec_key = '259af31fc2f74453b3a55739b21ae9ef'
+    signature = str(merchantCode + merchantRefNum + merchant_cust_prof_id +
+                    payment_method + amount + merchant_sec_key)
+
+# defining a params dict for the parameters to be sent to the API
+    PaymentData = {
+        "merchantCode": "1tSa6uxz2nTwlaAmt38enA==",
+        "customerName": "example",
+        "customerMobile": "01234567891",
+        "customerEmail": "example@gmail.com",
+        "customerProfileId": "777777",
+        "merchantRefNum": "2312465464",
+        "amount": "5",
+        "paymentExpiry": "163113878400000",
+        "currencyCode": "EGP",
+        "language": "en-gb",
+        "chargeItems": [
+            {
+                "itemId": "897fa8e81be26df25db592e81c31c",
+                "description": "Item Descriptoin",
+                "price": "5",
+                "quantity": "1"
+            }
+        ],
+        "signature": "2ca4c078ab0d4c50ba90e31b3b0339d4d4ae5b32f97092dd9e9c07888c7eef36",
+        "paymentMethod": "PAYATFAWRY",
+        "description": "Example Description"
+    }
+
+# sending post request and saving the response as response object
+    status_request = requests.post(headers={
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+    }, url=URL, json=PaymentData)
+    print(status_request.status_code)
+
+# extracting data in json format
+    status_response = status_request.json()
+    print(status_response)
+
+    context = {
+        'status_response': status_response,
+        'status_request': status_request
+    }
+    # print(status_request.json())
+
+    return render(request, 'fawrypay.html', context)
+
+
+def fawrycallbackurl(request):
+    PaymentData = {
+        "requestId": "c72827d084ea4b88949d91dd2db4996e",
+        "fawryRefNumber": "7105058403",
+        "merchantRefNumber": "2312465464",
+        "customerMobile": "01234567891",
+        "customerMail": "example@gmail.com",
+        "paymentAmount": 152.00,
+        "orderAmount": 150.00,
+        "fawryFees": 2.00,
+        "shippingFees": None,
+        "orderStatus": "NEW",
+        "paymentMethod": "PAYATFAWRY",
+        "messageSignature": "56bca514b2cc6822bf972a869a008f03cacebb14d19829368daa647dbc212aa5",
+        "orderExpiryDate": 1533554719314,
+        "orderItems": [{
+                       "itemCode": "e6aacbd5a498487ab1a10ae71061535d",
+                       "price": 150.0,
+                       "quantity": 1
+                       }],
+        "invoiceInfo": {
+            "number": "28176849",
+            "businessRefNumber": "w0dd2fss41d2d2qs556",
+            "dueDate": "2021-06-19",
+                       "expiryDate": 1625062277000
+        }
+    }
+
+# sending post request and saving the response as response object
+    status_request = requests.post(headers={
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+    }, url='https://atfawry.fawrystaging.com/ECommerceWeb/Fawry/payments/charge', json=PaymentData)
+
+    print(status_request)
+    print(status_request.json())
+
+    return render(request, 'fawrycallbackurl.html')
+
+
+def datajson(request):
+
+    return render(request, 'datajson.html')

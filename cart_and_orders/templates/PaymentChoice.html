@@ -116,14 +116,14 @@
                                     
                                 </li>
                                
-                                {% comment %} <li class="group-has-avatar youzify-show-cover">
+                                <li class="group-has-avatar youzify-show-cover">
 
                                    
                                     <div>
-                                        <div> <a href="#"> <img src="{% static "img/payment methods/fawry land.png" %}" width="400px" height="320px" /> </a></div>
+                                        <div> <a href="{% url 'cart_and_orders:fawrypay' %}"> <img src="{% static "img/payment methods/fawry land.png" %}" width="400px" height="320px" /> </a></div>
                                        <br>
                                         <div class="item">
-                                            <center><div class="item-title"><a href="#" class="bp-group-home-link season-of-the-witch-home-link">FawryPay</a></div></center>
+                                            <center><div class="item-title"><a href="{% url 'cart_and_orders:fawrypay' %}" class="bp-group-home-link season-of-the-witch-home-link">FawryPay</a></div></center>
                                             <div class="item-meta">
                                                 <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
                                             </div>
@@ -132,13 +132,13 @@
                                         </div>
                                     
                                         <div class="action">
-                                            <div class="group-button public generic-button"> <a href="#" class="group-button leave-group"><i class="ico_arrow-circle-right-white"></i> Proceed to Payment </a> </div>
+                                            <div class="group-button public generic-button"> <a href="{% url 'cart_and_orders:fawrypay' %}" class="group-button leave-group"><i class="ico_arrow-circle-right-white"></i> Proceed to Payment </a> </div>
                                             
                                         </div>
 
                                     </div>
                                     
-                                </li> {% endcomment %}
+                                </li> 
                             
                                 
 

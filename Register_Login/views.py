@@ -26,7 +26,7 @@ from Register_Login.models import AccessToken, Profile
 # from cart_and_orders.models import Cart
 
 # Importing Forms
-from Register_Login.forms import CompleteProfile, LoginForm, RegisterForm
+from Register_Login.forms import LoginForm, RegisterForm
 from cart_and_orders.emptying_cart import reset_all_users_cartItems_and_release_codes
 from cart_and_orders.models import Cart, Codes
 
@@ -154,6 +154,7 @@ def activate_user(request, token):
     
 
 def logOut(request):
+    reset_all_users_cartItems_and_release_codes(request)
     logout(request)
     messages.info(request, "Your session has been ended, please login again")
     return render(request, 'LogOut.html',)

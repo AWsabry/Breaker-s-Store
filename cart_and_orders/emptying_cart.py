@@ -30,11 +30,9 @@ def reset_all_users_cartItems_and_release_codes(request):
         for pointer in cartItemschecking:
             time = pointer['created']
             status = pointer['status']
-        time
-        print(time)
-
+            
         periodic_time = time + \
-            timedelta(days=0, hours=0, minutes=0, seconds=30)
+            timedelta(days=0, hours=0, minutes=1, seconds=30)
 
         pendingTime = time + \
                 timedelta(days=0, hours=3, minutes=0, seconds=0)
@@ -46,8 +44,8 @@ def reset_all_users_cartItems_and_release_codes(request):
                     Codes.objects.filter(addToCart=True, ordered=False).update(
                         user=None, addToCart=False, status='', active=True)
                 print("DELETED FROM CART DUE TO Pending Time")
-            if request.user.is_authenticated:
-                Cart.objects.filter(
+                if request.user.is_authenticated:
+                    Cart.objects.filter(
                     user=request.user).update(total_price=0)
    
         elif status == "Success":
@@ -58,15 +56,17 @@ def reset_all_users_cartItems_and_release_codes(request):
                 if deleting:
                     Codes.objects.filter(addToCart=True, ordered=False).update(
                         user=None, addToCart=False, status='', active=True)
-                print("DELETED FROM CART DUE TO Periodic Time")
-            if request.user.is_authenticated:
-                print('ehes')
-                Cart.objects.filter(
+                    print("DELETED FROM CART DUE TO Periodic Time")
+                    if request.user.is_authenticated:
+                        print('ehes')
+                        Cart.objects.filter(
                     user=request.user).update(total_price=0)
 
     elif request.user.is_authenticated and cartItemschecking.exists() == False:
         Cart.objects.filter(
             user=request.user).update(total_price=0)
-        print("Cart is Zero")
+        Codes.objects.filter(user=request.user,addToCart=True, ordered=False).update(
+                        user=None, addToCart=False, status='', active=True)
+        print("Cart Total Price is resetted")
     else:
         pass

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+            <main class="page-main">
+                <div class="uk-grid" data-uk-grid>
+                    <div class="uk-width-3-3@l">
+                        <div class="widjet --filters">
+                            <div class="widjet__head">
+                                <h3 class="uk-text-lead">Games </h3>
+                            </div>
+                
+                        </div>
+                        <div class="group-row">
+                            {% for games in games %}
+                            <ul id="youzify-groups-list" class="item-list">
+                                <li class="group-has-avatar youzify-show-cover">
+                                    <div class="youzify-group-data">
+                                        <div class="youzify-cover"><img alt="group" src="{{games.background_image.url}}"></div>
+                                        <a href="{{games.get_absolute_url}}" class="item-avatar">
+                                            <div class="youzify-group-avatar"><img class="avatar group-38-avatar avatar-100 photo lazyloaded" width="100" height="100" alt="Profile Photo" src="{{games.profile_image.url}}"></div>
+                                        </a>
+                                        <div class="item">
+                                            <div class="item-title"><a href="{{games.get_absolute_url}}" class="bp-group-home-link season-of-the-witch-home-link">{{games.gameName}}</a></div>
+                                            <div class="item-meta">
+                                                <div class="group-status"> <i class="fas fa-globe-asia"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="game-card__users">
+                                            
+                                        </div>
+                                        <div class="action">
+                                            <div class="group-button public generic-button"><a href="{{games.get_absolute_url}}" class="group-button leave-group">View Packages</a></div>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock content %}

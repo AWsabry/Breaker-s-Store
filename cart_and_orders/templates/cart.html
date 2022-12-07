@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+            <main class="page-main">
+                <div class="uk-grid" data-uk-grid>
+                    <div class="uk-width-2-3@l">
+                       <br><br>
+                        <div class="game-card --horizontal favourites-game">
+                            {% for cartItems in cartItems %} 
+                            <div class="game-card__box">
+                                <div class="widjet-game__media"><a href="{{cartItems.codeCategory.get_absolute_url}}" ><img src="{{cartItems.codeCategory.image.url}}" alt="image"></a></div>
+                                <div class="game-card__info"><a class="game-card__title" href="{{cartItems.codeCategory.get_absolute_url}}"> {{cartItems.codeCategory.codeCategory}}</a>
+                                    <div class="game-card__genre">{{cartItems.codeCategory.game.gameName}} </div>
+                                    <div class="game-card__rating-and-price">
+                                        <div class="game-card__rating"><span> x{{cartItems.quantity}}</span><i></i></div>
+                                        <div class="game-card__price"><span>L.E {{cartItems.codeCategory.price}} </span></div>
+                                    </div>
+                                    <div class="game-card__bottom">
+                                        <div class="game-card__platform"><i class="ico_windows"></i><i class="ico_apple"></i></div>
+                                    </div>
+                                </div>
+                                <div class = 'trash' ><a href="{{cartItems.deleteing_item}}"> <img src="{% static "img/trash.png" %}" width="40"> </a></div>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                            <br>
+                            
+                            <div>
+                                {% for cart in cart %}
+                               <center> <h3 class="uk-text-lead">SubTotal : {{cart.total_price}}</h3></center>
+                               {% endfor %}
+                            </div>
+                           
+                        </div>
+       
+                        {% comment %} {% endif %} {% endcomment %}
+                    </div> 
+                    
+                  <br><br><br><br>
+                    
+                   <div class="checkout-form">
+                        <div class="form-login__box">
+                            
+                             {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li> {{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                            <br>
+                            {% endif %}
+                            {% for cart in cart %}
+                            <div class="uk-heading-line uk-text-center"><span>Checkout</span></div>
+                            <center> <h5 class = "notes"> * Fees are added depending on the payment method.</h5></center>
+
+                            <br>
+                       
+                            {% endfor %}
+                            
+                            
+
+                            <form method="POST">
+								{% csrf_token %}
+                                <div class="uk-margin">
+                                    
+                                    <hr>
+                                    {% for cart in cart %}
+                                    {% if cart.total_price == 0 %}
+                                    <a  href = " {% url 'cart_and_orders:PaymentChoice' %}"><input href = "{% url 'categories_and_products:index' %}"  class="uk-button uk-button-danger uk-width-1-1"  value="Pay Now"></div></a>
+
+                                    {% else %}
+                                    <a  href = " {% url 'cart_and_orders:PaymentChoice' %}"><input href = "{% url 'categories_and_products:index' %}"  class="uk-button uk-button-danger uk-width-1-1"  value="Pay Now" ></div></a>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <hr>
+                                    <a  href = "{% url 'categories_and_products:index' %}"><input href = "{% url 'categories_and_products:index' %}" class="uk-button secondary uk-width-1-1 "  value="Continue shopping"/></div></a>
+                                  </form>
+                                  <br>
+                     
+                                
+                        </div>
+                    </div> 
+                    
+                </div>
+                
+                
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

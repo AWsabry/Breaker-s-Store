@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+            <main class="page-main">
+                <div class="uk-grid" data-uk-grid>
+                    <div class="uk-width-3-3@l">
+                        <div class="widjet --filters">
+                            <br><br><br>
+                            <div class="widjet__head">
+                                
+                                <h3 class="uk-text-lead">Our Store </h3>
+                            </div>
+                
+                        </div>
+                        <div class="group-row">
+
+                            {% for code_categories in code_categories %}
+                            <ul id="youzify-groups-list" class="item-list">
+                                <li class="group-has-avatar youzify-show-cover">
+                                    <div class="youzify-group-data">
+                                        <div class="youzify-cover-content">  <a href="{{code_categories.get_absolute_url}}"><img alt="group" src="{{code_categories.image.url}}"></a></div>
+                                       <br><br><br>
+                                        <div class="item">
+                                            <div class="item-title"><a href="{{code_categories.get_absolute_url}}" class="bp-group-home-link season-of-the-witch-home-link">{{code_categories.codeCategory}}</a></div>
+                                            
+                                            <div class="item-meta">
+                                                <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
+                                            </div>
+                                            <div class="game-card__price"><span>{{code_categories.price}} EGP </span></div>
+
+                                        </div>
+
+                                        
+                                    
+                                        {% comment %} <div class="action">
+                                            <div class="group-button public generic-button"><a href="{{code_categories.get_absolute_url}}" class="group-button leave-group">View Card</a></div>
+                                        </div> {% endcomment %}
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                            {% endfor %}
+              
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock content %}

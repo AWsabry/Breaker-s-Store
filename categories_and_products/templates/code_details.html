@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<main class="page-main">
+    <ul class="uk-breadcrumb">
+     
+        <li><a href="/"><span data-uk-icon="chevron-left"></span><span>Back to Store</span></a></li>
+        {% for codeCategories in codeCategories %}
+        <li><span>{{codeCategories.codeCategory}}</span></li>
+        {% endfor %}
+    </ul>
+    {% for codeCategories in codeCategories %}
+    <h3 class="uk-text-lead">{{codeCategories.codeCategory}}</h3>
+    {% endfor %}
+    <br><br><br>
+    <div class="uk-grid uk-grid-small" data-uk-grid>
+        <div class="uk-width-2-3@s">
+            <div class="gallery">
+                    <div class="swiper">
+                        {% for codeCategories in codeCategories %}
+                        {% comment %} <div class="swiper-wrapper"> {% endcomment %}
+                            <div class="swiper"><img src="{{codeCategories.background_image.url}}" alt="image"></div>
+      
+
+                        {% comment %} </div> {% endcomment %}
+                      
+                    <div class="news-feed news-feed-post">
+
+
+                            <h4 class="post-name">How to use the codes 🧐 </h4>
+                            <div class="post-body">
+                                {{codeCategories.instruction}}
+                            </div>
+                    </div>
+                    {% endfor %}
+                        
+                    </div>
+                    
+            </div>
+            
+        </div>
+       
+
+
+        <div class="uk-width-1-3@s">
+            <div class="game-profile-card">
+                {% for codeCategories in codeCategories %}
+                <div class="game-profile-card__media"><img src="{{codeCategories.image.url}}" alt="game-profile-card"></div>
+                
+                <ul class="game-profile-card__type">
+                    <li><a href = {{codeCategories.game.get_absolute_url}}><span>{{codeCategories.game}}</span></a></li>
+             
+                </ul>
+               
+            </div>
+
+            
+            <div class="game-profile-price" >
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li> {{ message }} </li>
+                    {% endfor %}
+                    <br>
+                </ul>
+                
+                {% endif %}
+
+                {% if all_codes_in_category == 0 %}
+
+                <center> <h3 style="color:#c00000" class="uk-text-lead">Out Of Stock !</h3></center>
+
+                {% else %}
+                <div class="uk-margin">
+                     <form method = "POST">
+                        {% csrf_token %}
+                        <h5 class="uk-text-lead">Quantity : </h5>
+                        <center> <input class="uk-input-qty" type = "number" min="1" max="10"  name="Quantity" id="Quantity" value = "1" placeholder="Quantity" required></center>
+                </div> 
+                
+                
+            </div>
+            <div class="game-profile-price">
+                <div class="game-profile-price__value">{{codeCategories.price}} EGP </div><a> <button class="uk-button uk-button-danger uk-width-1-1" type="submit"><span class="ico_shopping-cart"></span><span>Add to Cart</span></button></a>
+            </div>  
+            {% endif %}          
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+
+{% endblock content %}

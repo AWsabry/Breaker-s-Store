@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<main class="page-main">
+  <ul class="uk-breadcrumb">
+    <li>
+      <a href="/"
+        ><span data-uk-icon="chevron-left"></span><span>Back to Store</span></a
+      >
+    </li>
+
+    <li><span>Refund Policy</span></li>
+  </ul>
+  <h3 class="uk-text-lead">Refund Policy</h3>
+  <br /><br /><br />
+  <div class="uk-grid uk-grid-small" data-uk-grid>
+    <div class="uk-width-2-3@s">
+      <div class="gallery">
+        <div class="swiper">
+          {% comment %}
+          <div class="swiper-wrapper">{% endcomment %} {% comment %}</div>
+          {% endcomment %}
+
+          <div class="news-feed news-feed-post">
+            <div class="post-body">
+                <h3 class="post-name">Digital codes delivered online cannot be returned, refunded, or exchanged for other products due to sensitive nature of these products and for security reasons.
+                    We guarantee that you receive a valid license code working according to regions and conditions stated in each product description page.
+                    We have the right to suspend your account on the Site in case of defamation on any online or offline media without seeking us first.
+                    We are not responsible for any errors, issues, bad experience or loss of balance due to customer account issue or violation of terms in the platform where the digital product shall be redeemed as long as the code was sold as valid at the date and time of delivery. After delivering your digital product, the legal responsibility is automatically transferred to the other platform offering this product.
+                    </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

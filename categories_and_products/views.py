@@ -176,3 +176,12 @@ def filtering_test(request):
     products = Codes.objects.filter(active=True, codeCategory="").values()
     print(products)
     return render(request, 'filter.html', {'products': products})
+
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html',)
+
+
+
+def refund(request):
+    return render(request, 'refund_policy.html',)

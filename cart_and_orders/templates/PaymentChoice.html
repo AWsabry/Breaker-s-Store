@@ -94,25 +94,7 @@
                                 </li>
                                 <li class="group-has-avatar youzify-show-cover">
 
-                                   
-                                    <div>
-                                        <div> <a href="{% url 'cart_and_orders:RefrenceCode' %}"> <img src="{% static "img/payment methods/opay.png" %}" width="400px" height="320px" /> </a></div>
-                                       <br>
-                                        <div class="item">
-                                            <center><div class="item-title"><a href="{% url 'cart_and_orders:RefrenceCode' %}" class="bp-group-home-link season-of-the-witch-home-link">Opay</a></div></center>
-                                            <div class="item-meta">
-                                                <div class="group-status"> <i class="fas-fa-globe-asia"></i></div>
-                                            </div>
-                                            <center> <div class="game-card__price"><span>Taxes Fees : 1.6 % </span></div></center>
 
-                                        </div>
-                                    
-                                        <div class="action">
-                                            <div class="group-button public generic-button"> <a href="{% url 'cart_and_orders:RefrenceCode' %}" class="group-button leave-group"><i class="ico_arrow-circle-right-white"></i> Proceed to Payment </a> </div>
-                                            
-                                        </div>
-
-                                    </div>
                                     
                                 </li>
                                
@@ -155,40 +137,3 @@
         </div>
     </div>
 {% endblock content %}
-
-{% comment %} <center>
-
-
-    <br>
-    <h3 class="uk-text-lead">Payment Methods : {{cart.total_price}}</h3>
-    <br><br>
-    <br><br>
-    <div class="leftpayment">
-        <br>
-    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/cib.png" %}" width="400px" height="320px" /> </a>
-    <h3> CIB Wallet </h3>
-    
-    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/mastercard.png" %}" width="400px" height="320px" /> </a>
-    <h3> Mastercard </h3>
-    
-    <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/orange.png" %}" width="258px" height="241px" /> </a>
-    <h3> Orange Money </h3>
-
-
-    </div><!-- comment to close gap--><div class="rightpayment">
-        <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/meeza.png" %}" width="400px" height="320px" /> </a>
-        <h3> Meeza </h3>
-        
-        <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/visa.png" %}" width="400px" height="320px" /> </a>
-        <h3> Visa</h3>
-      
-
-        <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/payment methods/vcash.png" %}" width="400px" height="320px" /> </a>
-        <h3> Vodafone Cash </h3>
-        </div>
-
-        <a href = "{% url 'cart_and_orders:OpayPayment' %}" > <img src="{% static "img/opay.png" %}" width="400px" height="320px" /> </a>
-        <h3> Opay </h3>
-
-
-</center> {% endcomment %}

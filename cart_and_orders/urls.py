@@ -16,12 +16,8 @@ urlpatterns = [
     path('PaymentChoice', views.PaymentChoice, name='PaymentChoice'),
     path('CardsPayment', views.CardsPayment, name='CardsPayment'),
     path('WalletPayment', views.WalletPayment, name='WalletPayment'),
-    path('RefrenceCode', views.RefrenceCode, name='RefrenceCode'),
-    path('callbackurl', views.callbackurl,name = 'callbackurl'),
     path('fawrypay', views.fawrypay, name='fawrypay'),
-    path('datajson', views.datajson, name='datajson'),
 
-    path('fawrycallbackurl', views.fawrycallbackurl, name='fawrycallbackurl'),
     path('PaymentFailed', views.PaymentFailed, name='PaymentFailed'),
     
     path('<int:id>', views.deleting, name='deleting'),

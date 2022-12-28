@@ -13,5 +13,6 @@ urlpatterns = [
     path('searchedPage',views.searchedPage,name='searchedPage'),
     path('<slug:Gameslug>/',views.GamesCodes,name='GamesCodes'),
     path('filter',views.filtering_test,name='filter'),
-
+    path('privacy_policy',views.privacy_policy,name='privacy_policy'),
+    path('refund',views.refund,name='refund')
 ]

@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<main class="page-main">
+  <ul class="uk-breadcrumb">
+    <li>
+      <a href="/"
+        ><span data-uk-icon="chevron-left"></span><span>Back to Store</span></a
+      >
+    </li>
+
+    <li><span>Privacy Policy</span></li>
+  </ul>
+  <h3 class="uk-text-lead">Privacy Policy</h3>
+  <br /><br /><br />
+  <div class="uk-grid uk-grid-small" data-uk-grid>
+    <div class="uk-width-2-3@s">
+      <div class="gallery">
+        <div class="swiper">
+          {% comment %}
+          <div class="swiper-wrapper">{% endcomment %} {% comment %}</div>
+          {% endcomment %}
+
+          <div class="news-feed news-feed-post">
+            <div class="post-body">
+                <h3 class="post-name">We take reasonable measures (physical, organizational, and technological) to safeguard against unauthorized access to your personally identifiable information and to safely store your personally identifiable information. However, the Internet is not a secure medium and the privacy of your personal information can never be guaranteed. We have no control over the practices of third parties (e.g. website links to this Site or third parties who misrepresent themselves as you or someone else). You agree that we may process your personal information that you provide to it for the purposes of providing the services on our store and for sending marketing communications to you, and that the Privacy Policy of this Site governs our collection, processing, use and any transfer of your personally identifiable information.</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

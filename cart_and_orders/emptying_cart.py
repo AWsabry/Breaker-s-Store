@@ -12,7 +12,7 @@ from django.db.models import Exists, OuterRef
 
 def deleting_from_cart(request):
     deleteing = CartItems.objects.filter(
-        user=request.user, ordered=False,).delete()
+        user=request.user, paid=False,).delete()
 
     if deleteing:
         Codes.objects.filter(
